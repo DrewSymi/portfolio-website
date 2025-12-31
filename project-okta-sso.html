@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Okta Workforce SSO Integration | Andrew Symister</title>
+    <meta name="description" content="Lab project: Okta app onboarding with SAML/OIDC, SCIM provisioning concepts, and user lifecycle controls.">
+    <link rel="icon" type="image/jpeg" href="images/my-photo.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root{--bg-primary:#0a0e14;--bg-secondary:#0f1419;--bg-card:#151b23;--bg-glass:rgba(21,27,35,0.7);--text-primary:#e6edf3;--text-secondary:#8b949e;--text-muted:#6e7681;--accent:#58a6ff;--accent-green:#3fb950;--accent-yellow:#d29922;--accent-cyan:#00d4ff;--border:#21262d;--glow:0 0 20px rgba(88,166,255,0.3);--transition:0.3s cubic-bezier(0.4,0,0.2,1)}
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        html{scroll-behavior:smooth}
+        body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg-primary);color:var(--text-primary);line-height:1.7}
+        .grid-bg{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.02;background-image:linear-gradient(var(--accent) 1px,transparent 1px),linear-gradient(90deg,var(--accent) 1px,transparent 1px);background-size:50px 50px}
+        :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+        nav{position:fixed;top:0;width:100%;z-index:1000;padding:1rem 5%;background:rgba(10,14,20,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+        .nav-container{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+        .back-link,.nav-contact{color:var(--text-secondary);text-decoration:none;font-size:0.9rem;display:flex;align-items:center;gap:0.5rem;transition:all var(--transition)}
+        .back-link:hover,.nav-contact:hover{color:var(--accent)}
+        .hero{padding:8rem 5% 4rem;background:var(--bg-secondary);position:relative;overflow:hidden}
+        .container{max-width:900px;margin:0 auto;position:relative;z-index:1}
+        .badge{display:inline-flex;align-items:center;gap:0.4rem;padding:0.4rem 0.75rem;border-radius:6px;font-size:0.75rem;font-weight:600;text-transform:uppercase;background:rgba(210,153,34,0.15);color:var(--accent-yellow);border:1px solid rgba(210,153,34,0.3);margin-bottom:1rem}
+        h1{font-size:2.25rem;font-weight:800;margin-bottom:1rem;line-height:1.2}
+        .subtitle{color:var(--text-secondary);font-size:1.1rem;margin-bottom:2rem}
+        .tags{display:flex;flex-wrap:wrap;gap:0.5rem}
+        .tag{padding:0.4rem 0.75rem;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;font-size:0.8rem;color:var(--text-secondary);transition:all var(--transition)}
+        .tag:hover{border-color:var(--accent)}
+        section{padding:3rem 5%;position:relative;z-index:1}
+        section:nth-child(even){background:var(--bg-secondary)}
+        .section-title{font-size:1.5rem;font-weight:700;margin-bottom:1.5rem;display:flex;align-items:center;gap:0.75rem}
+        .section-title i{color:var(--accent)}
+        .content p{color:var(--text-secondary);margin-bottom:1.25rem;line-height:1.8}
+        .content ul{color:var(--text-secondary);margin-left:1.5rem;margin-bottom:1.25rem}
+        .content li{margin-bottom:0.5rem}
+        .card{background:var(--bg-glass);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:12px;padding:1.5rem;transition:all var(--transition)}
+        .card:hover{border-color:var(--accent);box-shadow:var(--glow)}
+        .highlight-box{background:rgba(88,166,255,0.1);border:1px solid rgba(88,166,255,0.2);border-radius:8px;padding:1.25rem;margin:1.5rem 0}
+        .highlight-box h4{color:var(--accent);font-size:0.9rem;margin-bottom:0.5rem}
+        .highlight-box p{color:var(--text-secondary);margin:0}
+        .workflow-box{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin:1.5rem 0}
+        .workflow-title{font-size:1rem;font-weight:600;margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem}
+        .workflow-title i{color:var(--accent-green)}
+        .workflow-steps{display:flex;flex-direction:column;gap:1rem}
+        .workflow-step{display:flex;align-items:center;gap:1rem;padding:0.75rem;background:var(--bg-secondary);border-radius:8px}
+        .step-number{width:32px;height:32px;background:linear-gradient(135deg,var(--accent),var(--accent-cyan));border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;color:var(--bg-primary);flex-shrink:0}
+        .step-content strong{color:var(--text-primary);display:block;margin-bottom:0.15rem}
+        .step-content span{color:var(--text-muted);font-size:0.85rem}
+        .tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:1.5rem 0}
+        .tool-card{padding:1rem;text-align:center}
+        .tool-card i{font-size:2rem;color:var(--accent);margin-bottom:0.75rem}
+        .tool-card h4{font-size:0.9rem;margin-bottom:0.25rem}
+        .tool-card p{font-size:0.75rem;color:var(--text-muted);margin:0}
+        .screenshot-placeholder{background:var(--bg-card);border:2px dashed var(--border);border-radius:12px;padding:4rem 2rem;text-align:center;margin:1.5rem 0}
+        .screenshot-placeholder i{font-size:2.5rem;color:var(--text-muted);margin-bottom:0.75rem;display:block}
+        .screenshot-placeholder p{color:var(--text-muted);font-size:0.9rem}
+        .video-section{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:2.5rem;text-align:center;margin:2rem 0}
+        .video-section i{font-size:3rem;color:var(--accent);margin-bottom:1rem;display:block}
+        .video-section h4{margin-bottom:0.5rem}
+        .video-section p{color:var(--text-muted);font-size:0.9rem}
+        .cta-section{text-align:center;padding:4rem 5%}
+        .btn{padding:0.875rem 1.5rem;border-radius:8px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;background:linear-gradient(135deg,var(--accent),#4a90d9);color:var(--bg-primary);transition:all var(--transition)}
+        .btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(88,166,255,0.3)}
+        footer{padding:2rem 5%;text-align:center;border-top:1px solid var(--border);color:var(--text-muted);font-size:0.85rem;position:relative;z-index:1}
+        .fade-in{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease}
+        .fade-in.visible{opacity:1;transform:translateY(0)}
+        @media(max-width:768px){h1{font-size:1.75rem}section{padding:2rem 5%}.tools-grid{grid-template-columns:1fr}}
+        @media(prefers-reduced-motion:reduce){.fade-in{opacity:1;transform:none}}
+    </style>
+</head>
+<body>
+    <div class="grid-bg" aria-hidden="true"></div>
+    <nav aria-label="Project navigation">
+        <div class="nav-container">
+            <a href="index.html" class="back-link"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back to Portfolio</a>
+            <a href="/cdn-cgi/l/email-protection#2647555f4b4f5552435466414b474f4a0845494b" class="nav-contact"><i class="fas fa-paper-plane" aria-hidden="true"></i> Contact</a>
+        </div>
+    </nav>
+    <main>
+        <header class="hero">
+            <div class="container">
+                <span class="badge"><i class="fas fa-flask" aria-hidden="true"></i> Lab Project</span>
+                <h1>Okta Workforce SSO Integration</h1>
+                <p class="subtitle">App onboarding with SAML/OIDC, SCIM provisioning concepts, and user lifecycle controls for workforce identity management.</p>
+                <div class="tags" role="list" aria-label="Technologies used">
+                    <span class="tag" role="listitem">Okta</span>
+                    <span class="tag" role="listitem">SSO</span>
+                    <span class="tag" role="listitem">SAML 2.0</span>
+                    <span class="tag" role="listitem">OIDC</span>
+                    <span class="tag" role="listitem">SCIM</span>
+                    <span class="tag" role="listitem">Lifecycle</span>
+                </div>
+            </div>
+        </header>
+
+        <section aria-labelledby="problem-heading">
+            <div class="container">
+                <h2 class="section-title fade-in" id="problem-heading"><i class="fas fa-question-circle" aria-hidden="true"></i> Problem Statement</h2>
+                <div class="content fade-in">
+                    <p>Organizations using dozens of SaaS applications face a management nightmare: separate credentials per app, manual provisioning, delayed access for new hires, and orphaned accounts when people leave. Every app becomes a potential security gap.</p>
+                    <p>This project demonstrates how to centralize authentication through Okta SSO, automate user provisioning with SCIM, and implement lifecycle controls that ensure access is granted quickly and revoked completely.</p>
+                </div>
+            </div>
+        </section>
+
+        <section aria-labelledby="why-heading">
+            <div class="container">
+                <h2 class="section-title fade-in" id="why-heading"><i class="fas fa-lightbulb" aria-hidden="true"></i> Why This Matters in IAM</h2>
+                <div class="content fade-in">
+                    <p>SSO isn't just convenience — it's a security control. Centralizing authentication means:</p>
+                    <ul>
+                        <li><strong>Single Point of Enforcement:</strong> MFA, password policies, session controls applied universally</li>
+                        <li><strong>Reduced Attack Surface:</strong> Fewer passwords means fewer targets for phishing</li>
+                        <li><strong>Faster Onboarding:</strong> New hires get access in minutes, not days</li>
+                        <li><strong>Complete Offboarding:</strong> Disable one account, revoke all access instantly</li>
+                        <li><strong>Audit Visibility:</strong> All authentication flows logged centrally</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section aria-labelledby="architecture-heading">
+            <div class="container">
+                <h2 class="section-title fade-in" id="architecture-heading"><i class="fas fa-sitemap" aria-hidden="true"></i> Architecture & Workflow</h2>
+                <div class="workflow-box fade-in">
+                    <div class="workflow-title"><i class="fas fa-route" aria-hidden="true"></i> App Onboarding Process</div>
+                    <div class="workflow-steps" role="list" aria-label="Onboarding steps">
+                        <div class="workflow-step" role="listitem"><div class="step-number">1</div><div class="step-content"><strong>App Discovery</strong><span>Identify app in Okta Integration Network or configure custom SAML/OIDC</span></div></div>
+                        <div class="workflow-step" role="listitem"><div class="step-number">2</div><div class="step-content"><strong>Federation Setup</strong><span>Configure SP metadata, IdP metadata exchange, attribute mapping</span></div></div>
+                        <div class="workflow-step" role="listitem"><div class="step-number">3</div><div class="step-content"><strong>SCIM Provisioning</strong><span>Enable automated user/group sync where supported</span></div></div>
+                        <div class="workflow-step" role="listitem"><div class="step-number">4</div><div class="step-content"><strong>Assignment Rules</strong><span>Configure group-based app assignment for automatic access</span></div></div>
+                        <div class="workflow-step" role="listitem"><div class="step-number">5</div><div class="step-content"><strong>Testing & Rollout</strong><span>Pilot with test users, then roll out with monitoring</span></div></div>
+                    </div>
+                </div>
+                <div class="highlight-box fade-in">
+                    <h4><i class="fas fa-sync-alt" aria-hidden="true"></i> SCIM Provisioning</h4>
+                    <p>System for Cross-domain Identity Management (SCIM) automates user creation, updates, and deprovisioning. When a user is added to a group in Okta, SCIM creates their account in the target app. When they leave, SCIM disables or deletes it automatically.</p>
+                </div>
+            </div>
+        </section>
+
+        <section aria-labelledby="tools-heading">
+            <div class="container">
+                <h2 class="section-title fade-in" id="tools-heading"><i class="fas fa-tools" aria-hidden="true"></i> Tools Used</h2>
+                <div class="tools-grid fade-in" role="list" aria-label="Tools">
+                    <article class="card tool-card" role="listitem">
+                        <i class="fas fa-key" aria-hidden="true"></i>
+                        <h4>Okta Admin Console</h4>
+                        <p>App configuration, user assignment, policy management</p>
+                    </article>
+                    <article class="card tool-card" role="listitem">
+                        <i class="fas fa-exchange-alt" aria-hidden="true"></i>
+                        <h4>SAML 2.0</h4>
+                        <p>Federation protocol for SSO integration</p>
+                    </article>
+                    <article class="card tool-card" role="listitem">
+                        <i class="fas fa-code" aria-hidden="true"></i>
+                        <h4>OIDC</h4>
+                        <p>Modern authentication for web/mobile apps</p>
+                    </article>
+                    <article class="card tool-card" role="listitem">
+                        <i class="fas fa-users-cog" aria-hidden="true"></i>
+                        <h4>SCIM</h4>
+                        <p>Automated provisioning and deprovisioning</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section aria-labelledby="lifecycle-heading">
+            <div class="container">
+                <h2 class="section-title fade-in" id="lifecycle-heading"><i class="fas fa-user-clock" aria-hidden="true"></i> Lifecycle Impact</h2>
+                <div class="content fade-in">
+                    <p><strong>Joiner:</strong> New employee added to department group → automatically assigned relevant apps → accounts provisioned via SCIM → ready to work on day one.</p>
+                    <p><strong>Mover:</strong> Employee transfers to new team → group membership updated → old app access removed, new access granted → no tickets required.</p>
+                    <p><strong>Leaver:</strong> Employee terminated → Okta account deactivated → all SSO sessions revoked → SCIM deprovisions accounts in connected apps → zero orphaned access.</p>
+                </div>
+                <div class="screenshot-placeholder fade-in">
+                    <i class="fas fa-image" aria-hidden="true"></i>
+                    <p>Screenshot: Okta App Assignment Dashboard</p>
+                </div>
+            </div>
+        </section>
+
+        <section aria-labelledby="risk-heading">
+            <div class="container">
+                <h2 class="section-title fade-in" id="risk-heading"><i class="fas fa-shield-virus" aria-hidden="true"></i> Risk Considerations</h2>
+                <div class="content fade-in">
+                    <ul>
+                        <li><strong>Single Point of Failure:</strong> If Okta is down, SSO apps are inaccessible — plan for it</li>
+                        <li><strong>Session Hijacking:</strong> Stolen Okta session = access to all apps. Strong MFA is critical</li>
+                        <li><strong>Attribute Mismatch:</strong> Incorrect attribute mapping breaks provisioning silently</li>
+                        <li><strong>Shadow IT:</strong> Apps not in Okta bypass your controls — discovery matters</li>
+                        <li><strong>SCIM Failures:</strong> Monitor provisioning logs for sync errors</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section aria-labelledby="learnings-heading">
+            <div class="container">
+                <h2 class="section-title fade-in" id="learnings-heading"><i class="fas fa-graduation-cap" aria-hidden="true"></i> Lessons Learned</h2>
+                <div class="content fade-in">
+                    <ul>
+                        <li>Start with high-value, high-use apps — get visible wins early</li>
+                        <li>Attribute mapping requires careful planning — get it right upfront</li>
+                        <li>Not all apps support SCIM — have a manual fallback process</li>
+                        <li>Group naming conventions matter at scale</li>
+                        <li>Test deprovisioning thoroughly — it's the security-critical path</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section aria-labelledby="video-heading">
+            <div class="container">
+                <h2 class="section-title fade-in" id="video-heading"><i class="fas fa-video" aria-hidden="true"></i> Video Walkthrough</h2>
+                <div class="video-section fade-in">
+                    <i class="fas fa-play-circle" aria-hidden="true"></i>
+                    <h4>Watch The Demo</h4>
+                    <p>Coming soon — I'll walk through app onboarding and lifecycle testing.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="container">
+                <h3 class="fade-in">Want to discuss SSO or Okta?</h3>
+                <a href="/cdn-cgi/l/email-protection#3756444e5a5e4443524577505a565e5b1954585a" class="btn fade-in"><i class="fas fa-paper-plane" aria-hidden="true"></i> Get In Touch</a>
+            </div>
+        </section>
+    </main>
+    <footer role="contentinfo"><p>&copy; 2025 Andrew Symister · Lab Project</p></footer>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const fadeElements = document.querySelectorAll('.fade-in');
+        function checkFade() {
+            fadeElements.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight -

@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Andrew Symister | IAM Engineer</title>
+<meta name="description" content="Andrew Symister - IAM Engineer Portfolio. Hands-on experience with Okta, Entra ID, SCIM, PowerShell automation, and enterprise identity lifecycle. SC-300 certified.">
+<meta property="og:title" content="Andrew Symister | IAM Engineer">
+<meta property="og:description" content="IAM Engineer with hands-on experience in enterprise identity operations. Okta, Entra ID, SCIM, PowerShell automation. SC-300 certified.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://andrewsymister.com">
+<meta property="og:image" content="https://andrewsymister.com/images/og-preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Andrew Symister Portfolio">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Andrew Symister | IAM Engineer">
+<meta name="twitter:description" content="IAM Engineer with hands-on experience in enterprise identity operations.">
+<meta name="twitter:image" content="https://andrewsymister.com/images/og-preview.png">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="apple-touch-icon" href="images/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{--bg:#0b1221;--bg2:#0f1825;--bg3:#182536;--card:#14202f;--glass:rgba(20,32,47,0.92);--text:#e4e9f0;--text2:#8a9bb0;--text3:#5a6a7d;--accent:#2563eb;--green:#0d9668;--yellow:#c2850c;--red:#c53030;--purple:#4338ca;--cyan:#0c7792;--border:#243548;--grad1:linear-gradient(135deg,#2563eb,#1d4ed8);--grad2:linear-gradient(135deg,#0d9668,#0c7792);--shadow:0 4px 20px rgba(0,0,0,0.35)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+.bg-effects{position:fixed;inset:0;pointer-events:none;z-index:0}
+.orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.4;animation:float 20s infinite}
+.orb1{width:500px;height:500px;background:radial-gradient(circle,rgba(37,99,235,0.12),transparent 70%);top:-200px;left:-200px}
+.orb2{width:400px;height:400px;background:radial-gradient(circle,rgba(12,119,146,0.08),transparent 70%);top:50%;right:-150px;animation-delay:-7s}
+@keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,-30px)}}
+nav{position:fixed;top:0;width:100%;z-index:1000;padding:1rem 5%;background:rgba(10,14,20,0.9);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-bottom:1px solid transparent;transition:0.3s}
+nav.scrolled{border-color:var(--border);box-shadow:var(--shadow)}
+.nav-c{max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+.logo{display:flex;align-items:center;gap:0.75rem;text-decoration:none;color:var(--text);font-weight:700}
+.logo img{width:40px;height:40px;border-radius:12px;border:2px solid var(--border)}
+.nav-links{display:flex;gap:0.5rem;list-style:none}
+.nav-links a{color:var(--text2);text-decoration:none;padding:0.6rem 1rem;border-radius:8px;font-size:0.9rem;transition:0.3s}
+.nav-links a:hover{color:var(--text);background:rgba(88,166,255,0.1)}
+.nav-cta{background:var(--grad1)!important;color:#fff!important;font-weight:600!important}
+.mobile-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px}
+.mobile-toggle span{width:24px;height:2px;background:var(--text)}
+section{padding:6rem 5%;position:relative;z-index:1}
+.container{max-width:1400px;margin:0 auto}
+.section-header{text-align:center;margin-bottom:4rem}
+.badge{display:inline-flex;align-items:center;gap:0.5rem;padding:0.4rem 0.9rem;background:rgba(37,99,235,0.08);border:1px solid rgba(37,99,235,0.2);border-radius:4px;font-size:0.75rem;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1.5rem}
+.section-title{font-size:clamp(2rem,4vw,3rem);font-weight:800;margin-bottom:1rem;background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.section-sub{font-size:1.1rem;color:var(--text2);max-width:600px;margin:0 auto}
+.hero{min-height:100vh;display:flex;align-items:center;padding-top:6rem}
+.hero-content{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.hero-badge{display:inline-flex;align-items:center;gap:0.5rem;padding:0.4rem 0.9rem;background:rgba(13,150,104,0.1);border:1px solid rgba(13,150,104,0.25);border-radius:4px;font-size:0.8rem;font-weight:600;color:var(--green);margin-bottom:1.5rem}
+.hero-title{font-size:clamp(2.5rem,5vw,4rem);font-weight:900;line-height:1.1;margin-bottom:1.5rem}
+.grad-text{background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.typing{font-family:'JetBrains Mono',monospace;font-size:1.1rem;color:var(--cyan);margin-bottom:1.5rem}
+.typing::after{content:'|';animation:blink 0.8s infinite}
+@keyframes blink{50%{opacity:0}}
+.hero-desc{font-size:1.1rem;color:var(--text2);line-height:1.8;margin-bottom:2rem;max-width:540px}
+.role-card{background:var(--glass);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:8px;padding:1.5rem;margin-bottom:2rem;position:relative;overflow:hidden}
+.role-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad2)}
+.role-label{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--green);font-weight:600;margin-bottom:0.5rem;display:flex;align-items:center;gap:0.5rem}
+.role-label::before{content:'';width:8px;height:8px;background:var(--green);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{50%{opacity:0.5;transform:scale(1.2)}}
+.role-title{font-size:1.1rem;font-weight:700}
+.role-company{color:var(--accent);font-weight:600}
+.role-details{color:var(--text2);font-size:0.9rem;margin-top:0.75rem}
+.cert-badges{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:2rem}
+.cert-badge{display:inline-flex;align-items:center;gap:0.4rem;padding:0.35rem 0.7rem;border-radius:4px;font-size:0.75rem;font-weight:600}
+.cert-badge.earned{background:rgba(13,150,104,0.1);border:1px solid rgba(13,150,104,0.25);color:var(--green)}
+.cert-badge.learning{background:rgba(90,106,125,0.12);border:1px solid rgba(90,106,125,0.2);color:var(--text2)}
+.cta-group{display:flex;gap:1rem;flex-wrap:wrap}
+.btn{padding:0.875rem 1.5rem;border-radius:6px;font-weight:600;font-size:0.9rem;text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;transition:all 0.25s ease;border:none;cursor:pointer;font-family:inherit}
+.btn-primary{background:var(--grad1);color:#fff}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(37,99,235,0.3)}
+.btn-secondary{background:var(--bg3);color:var(--text);border:1px solid var(--border)}
+.btn-secondary:hover{border-color:var(--accent)}
+.btn-green{background:var(--grad2);color:#fff}
+.btn-green:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(13,150,104,0.3)}
+.hero-visual{display:flex;justify-content:center}
+.hero-img-wrap{position:relative}
+.hero-img-wrap::before{content:'';position:absolute;inset:-3px;background:var(--grad1);border-radius:22px;z-index:-1;opacity:0.7}
+.hero-img{width:280px;height:280px;border-radius:20px;object-fit:cover;border:3px solid var(--bg)}
+.social-links{display:flex;flex-wrap:wrap;gap:1rem;margin-top:2rem;padding-top:2rem;border-top:1px solid var(--border)}
+.social-link{display:flex;align-items:center;gap:0.5rem;color:var(--text2);text-decoration:none;font-size:0.9rem;transition:0.3s}
+.social-link:hover{color:var(--accent)}
+.social-link i{color:var(--accent)}
+
+/* Authentic Windows PowerShell Terminal */
+.terminal{background:#1a1b26;border-radius:8px;overflow:hidden;max-width:960px;margin:2rem auto;box-shadow:0 4px 24px rgba(0,0,0,0.5);position:relative}
+.terminal-header{background:#16161e;padding:0;display:flex;align-items:center;height:36px;border-bottom:1px solid #2a2b3d}
+.terminal-title{flex:1;font-family:"Segoe UI",-apple-system,sans-serif;font-size:12px;color:#787c99;font-weight:400;padding-left:8px}
+.window-controls{display:flex;height:100%;gap:8px;padding-right:12px;align-items:center}
+.win-btn{width:12px;height:12px;border-radius:50%;background:#3b3d54;border:none;cursor:default;font-size:0}
+.win-btn:nth-child(2){background:#ff5f57}
+.win-btn:nth-child(3){background:#febc2e}
+.win-btn:nth-child(4){background:#28c840}
+
+/* Context Bar - Identity State */
+.term-context-bar{display:flex;align-items:center;gap:0.5rem;padding:6px 14px;background:#1e1f2e;border-bottom:1px solid #2a2b3d;font-size:10px;font-family:"JetBrains Mono",monospace;flex-wrap:wrap}
+.term-ctx-item{display:flex;align-items:center;gap:4px;color:#565f89;padding:2px 6px;border-radius:3px;background:rgba(122,162,247,0.05)}
+.term-ctx-item.elevated{background:rgba(224,175,104,0.1);color:#e0af68}
+.term-ctx-label{color:#565f89}
+.term-ctx-value{color:#a9b1d6}
+.term-ctx-value.warn{color:#e0af68}
+.term-ctx-value.good{color:#9ece6a}
+.term-ctx-divider{color:#3b3d54;margin:0 4px}
+
+/* Telemetry Bar - Live Heartbeat */
+.term-telemetry{display:flex;align-items:center;gap:1rem;padding:5px 14px;background:#16161e;border-bottom:1px solid #2a2b3d;font-size:10px;font-family:"JetBrains Mono",monospace}
+.term-telem-item{display:flex;align-items:center;gap:5px;color:#565f89}
+.term-telem-label{color:#444859}
+.term-telem-value{color:#7aa2f7;font-weight:500}
+.term-telem-pulse{width:4px;height:4px;border-radius:50%;background:#9ece6a;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:0.4}50%{opacity:1}}
+
+/* Risk Indicators */
+.term-risk{font-size:10px;padding:1px 5px;border-radius:2px;margin-left:6px;font-weight:500}
+.term-risk-low{background:rgba(158,206,106,0.15);color:#9ece6a}
+.term-risk-med{background:rgba(224,175,104,0.15);color:#e0af68}
+.term-risk-high{background:rgba(247,118,142,0.15);color:#f7768e}
+.term-risk-crit{background:rgba(247,118,142,0.25);color:#f7768e;font-weight:600}
+
+/* Approval Indicators */
+.term-approval{font-size:9px;padding:1px 4px;border-radius:2px;margin-left:4px;text-transform:uppercase;letter-spacing:0.5px}
+.term-approval-auto{background:rgba(158,206,106,0.1);color:#9ece6a}
+.term-approval-human{background:rgba(187,154,247,0.15);color:#bb9af7}
+.term-approval-review{background:rgba(224,175,104,0.15);color:#e0af68}
+
+/* Audit Echo */
+.term-audit-echo{display:flex;align-items:center;gap:6px;padding:4px 10px;margin:4px 0;background:rgba(42,195,222,0.05);border-left:2px solid #2ac3de;font-size:10px;color:#565f89}
+.term-audit-id{color:#2ac3de;font-weight:500}
+
+/* Wisdom Notes */
+.term-wisdom{display:flex;align-items:flex-start;gap:8px;padding:8px 12px;margin:8px 0;background:rgba(122,162,247,0.04);border:1px solid rgba(122,162,247,0.1);border-radius:4px;font-size:11px;color:#7aa2f7;font-style:italic;line-height:1.5}
+.term-wisdom::before{content:"💡";font-style:normal;flex-shrink:0}
+
+/* Vendor Themes */
+.terminal.theme-entra{--term-accent:#0078d4;--term-bg:#1b1b1b;--term-header:#252525}
+.terminal.theme-okta{--term-accent:#00297a;--term-bg:#0d1117;--term-header:#161b22}
+.terminal.theme-aws{--term-accent:#ff9900;--term-bg:#0f1114;--term-header:#161921}
+.terminal.theme-ping{--term-accent:#b2d235;--term-bg:#1a1d21;--term-header:#22262c}
+
+/* Theme Switcher */
+.term-theme-switch{display:flex;gap:4px;padding:0 8px}
+.term-theme-btn{width:14px;height:14px;border-radius:3px;border:1px solid #3b3d54;cursor:pointer;transition:all 0.2s;opacity:0.6}
+.term-theme-btn:hover{opacity:1;transform:scale(1.1)}
+.term-theme-btn.active{opacity:1;border-color:#7aa2f7}
+.term-theme-btn[data-theme="default"]{background:linear-gradient(135deg,#7aa2f7,#bb9af7)}
+.term-theme-btn[data-theme="entra"]{background:#0078d4}
+.term-theme-btn[data-theme="okta"]{background:#00297a}
+.term-theme-btn[data-theme="aws"]{background:#ff9900}
+.term-theme-btn[data-theme="ping"]{background:#b2d235}
+
+.terminal-body{padding:14px 18px;font-family:"JetBrains Mono","Cascadia Mono","Consolas",monospace;font-size:13px;line-height:1.5;min-height:320px;max-height:420px;overflow-y:auto;background:#1a1b26}
+.term-line{margin-bottom:3px;white-space:pre-wrap}
+.term-prompt{color:#7aa2f7}
+.term-cmd{color:#c0caf5}
+.term-out{color:#a9b1d6}
+.term-success{color:#9ece6a}
+.term-warn{color:#e0af68}
+.term-error{color:#f7768e}
+.term-hl{color:#7dcfff}
+.term-header{color:#bb9af7}
+.term-copyright{color:#565f89}
+.term-link{color:#7aa2f7}
+.term-timestamp{color:#565f89;font-size:11px}
+.term-system{color:#2ac3de;font-weight:500}
+.term-divider{color:#3b3d54;border:none;margin:6px 0}
+.term-dim{color:#565f89}
+.term-user{color:#bb9af7}
+.term-path{color:#7aa2f7}
+.term-input-line{display:flex;align-items:center}
+.term-input{flex:1;background:transparent;border:none;color:#c0caf5;font-family:"JetBrains Mono","Cascadia Mono","Consolas",monospace;font-size:13px;outline:none;caret-color:#7aa2f7}
+.term-input:focus{box-shadow:none}
+.term-status-bar{display:flex;gap:1rem;padding:6px 14px;background:#16161e;border-top:1px solid #2a2b3d;font-size:11px;font-family:"JetBrains Mono",monospace}
+.term-status-item{display:flex;align-items:center;gap:6px;color:#565f89}
+.term-status-dot{width:6px;height:6px;border-radius:50%;background:#9ece6a}
+.term-hint{margin-top:0.75rem;padding:0.75rem 1rem;background:rgba(122,162,247,0.06);border:1px solid var(--border);border-radius:6px;font-size:0.85rem;color:var(--text2);font-family:'Inter',sans-serif}
+.term-hint code{background:var(--bg3);padding:0.2rem 0.5rem;border-radius:4px;color:#7dcfff;font-family:"JetBrains Mono",monospace;font-size:0.8rem}
+.term-icon{width:36px;height:36px;display:flex;align-items:center;justify-content:center;padding-left:10px}
+.term-info-btn{background:transparent;border:none;color:#565f89;font-size:12px;cursor:pointer;padding:0 12px;height:36px;transition:color 0.2s}
+.term-info-btn:hover{color:#7aa2f7}
+.term-info-panel{display:none;position:absolute;top:36px;left:0;right:0;background:#1e1f2e;border-bottom:1px solid #2a2b3d;padding:0;z-index:10;animation:slideDown 0.2s ease}
+.term-info-panel.active{display:block}
+@keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.term-info-content{padding:1.25rem 1.5rem;position:relative}
+.term-info-close{position:absolute;top:0.75rem;right:1rem;background:none;border:none;color:#565f89;font-size:1.25rem;cursor:pointer;transition:color 0.2s}
+.term-info-close:hover{color:#f7768e}
+.term-info-content h4{font-size:0.95rem;color:#c0caf5;margin-bottom:0.75rem;display:flex;align-items:center;gap:0.5rem}
+.term-info-content h4 i{color:#7aa2f7}
+.term-info-content p{font-size:0.85rem;color:#a9b1d6;line-height:1.6;margin-bottom:0.75rem}
+.term-info-content strong{color:#c0caf5}
+.term-info-note{display:flex;align-items:center;gap:0.5rem;padding:0.6rem 0.8rem;background:rgba(122,162,247,0.08);border-radius:4px;font-size:0.8rem;color:#7aa2f7;margin-top:0.5rem}
+.term-info-note i{color:#e0af68}
+.term-info-note code{background:#2a2b3d;padding:0.15rem 0.4rem;border-radius:3px;color:#7dcfff;font-family:"JetBrains Mono",monospace;font-size:0.75rem}
+
+.orgs-section{background:var(--bg2);overflow:hidden}
+.orgs-track{display:flex;gap:4rem;animation:scrollLogos 20s linear infinite;width:max-content}
+.orgs-track:hover{animation-play-state:paused}
+@keyframes scrollLogos{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.orgs-grid{display:flex;align-items:center;gap:4rem;padding:0 2rem}
+.org-logo{height:44px;opacity:0.5;transition:all 0.25s ease;filter:grayscale(30%)}
+.org-logo:hover{opacity:0.85;transform:scale(1.05);filter:grayscale(0%)}
+.about-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:4rem}
+.about-text p{color:var(--text2);font-size:1.05rem;line-height:1.8;margin-bottom:1.5rem}
+.about-text strong{color:var(--text)}
+.venn{padding:1.75rem;background:var(--bg3);border:1px solid var(--border);border-radius:12px}
+.venn-title{text-align:center;font-size:0.95rem;font-weight:600;margin-bottom:1.5rem;color:var(--text2)}
+.venn-diagram{position:relative;width:280px;height:240px;margin:0 auto}
+.venn-circle{position:absolute;width:130px;height:130px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;font-size:0.7rem;font-weight:600;line-height:1.3;transition:all 0.25s ease;cursor:pointer}
+.venn-circle:hover{transform:scale(1.06);z-index:10}
+.v-cyber{background:rgba(37,99,235,0.12);border:2px solid rgba(37,99,235,0.4);color:var(--accent);top:0;left:50%;transform:translateX(-50%)}
+.v-it{background:rgba(13,150,104,0.12);border:2px solid rgba(13,150,104,0.4);color:var(--green);bottom:0;left:15px}
+.v-audit{background:rgba(194,133,12,0.12);border:2px solid rgba(194,133,12,0.4);color:var(--yellow);bottom:0;right:15px}
+.venn-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:80px;height:80px;background:var(--grad1);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.9rem;color:#fff;z-index:5;box-shadow:0 0 20px rgba(37,99,235,0.35)}
+.venn-caption{text-align:center;margin-top:1.5rem;color:var(--text3);font-size:0.85rem}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:3rem}
+.stat-card{background:var(--glass);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:8px;padding:1.25rem;text-align:center;transition:all 0.25s ease}
+.stat-card:hover{border-color:var(--accent);transform:translateY(-3px)}
+.stat-val{font-size:2rem;font-weight:800;background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-label{font-size:0.8rem;color:var(--text3);margin-top:0.25rem}
+
+/* Animated Trajectory */
+.trajectory{max-width:900px;margin:0 auto}
+.traj-step{display:flex;gap:1.5rem;padding:1.5rem 0;position:relative;opacity:0;transform:translateX(-20px);transition:all 0.5s ease}
+.traj-step.visible{opacity:1;transform:translateX(0)}
+.traj-step::before{content:'';position:absolute;left:20px;top:55px;bottom:0;width:2px;background:var(--border);transform:scaleY(0);transition:transform 0.5s ease 0.2s}
+.traj-step.visible::before{transform:scaleY(1)}
+.traj-step:last-child::before{display:none}
+.step-marker{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1rem;z-index:2;transform:scale(0);transition:transform 0.35s ease 0.15s}
+.traj-step.visible .step-marker{transform:scale(1)}
+.traj-step.done .step-marker{background:var(--green);color:#fff}
+.traj-step.current .step-marker{background:var(--grad1);color:#fff;box-shadow:0 0 16px rgba(37,99,235,0.4);animation:pulseGlow 2.5s infinite}
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 16px rgba(37,99,235,0.4)}50%{box-shadow:0 0 24px rgba(37,99,235,0.55)}}
+.traj-step.future .step-marker{background:var(--bg3);border:2px solid var(--border);color:var(--text3)}
+.step-content{flex:1;background:var(--glass);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:8px;padding:1.5rem;transition:all 0.25s ease;transform:translateY(8px);opacity:0}
+.traj-step.visible .step-content{transform:translateY(0);opacity:1;transition-delay:0.2s}
+.traj-step:hover .step-content{border-color:var(--accent);transform:translateX(4px)}
+.step-phase{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem;font-weight:600}
+.traj-step.done .step-phase{color:var(--green)}
+.traj-step.current .step-phase{color:var(--accent)}
+.traj-step.future .step-phase{color:var(--text3)}
+.step-content h4{font-size:1.1rem;margin-bottom:0.5rem}
+.step-content p{color:var(--text2);font-size:0.9rem;line-height:1.6;margin-bottom:1rem}
+.step-tags{display:flex;flex-wrap:wrap;gap:0.4rem}
+.step-tags span{padding:0.25rem 0.6rem;background:var(--bg2);border-radius:4px;font-size:0.7rem;color:var(--text3);transition:0.3s}
+.traj-step.current .step-tags span{background:rgba(37,99,235,0.1);color:var(--accent)}
+.traj-step:hover .step-tags span{transform:translateY(-2px)}
+
+/* Animated Lab Cards */
+.lab-section{background:var(--bg2)}
+.lab-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;margin-bottom:2rem}
+.lab-card{background:var(--glass);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:8px;padding:1.5rem;transition:all 0.3s ease;opacity:0;transform:translateY(20px) scale(0.98)}
+.lab-card.visible{opacity:1;transform:translateY(0) scale(1)}
+.lab-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,0.25)}
+.lab-icon{width:48px;height:48px;background:rgba(37,99,235,0.08);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:1.25rem;margin-bottom:1rem;transition:all 0.3s ease}
+.lab-card:hover .lab-icon{background:var(--accent);color:#fff;transform:rotateY(180deg)}
+.lab-card h4{font-size:1rem;margin-bottom:0.5rem}
+.lab-card p{color:var(--text2);font-size:0.9rem;line-height:1.6;margin-bottom:1rem}
+.lab-stack{display:flex;flex-wrap:wrap;gap:0.4rem}
+.lab-stack span{padding:0.3rem 0.6rem;background:var(--bg);border:1px solid var(--border);border-radius:6px;font-size:0.75rem;color:var(--cyan);font-family:'JetBrains Mono',monospace;transition:0.3s}
+.lab-card:hover .lab-stack span{border-color:var(--accent);transform:translateY(-2px)}
+.lab-future{background:linear-gradient(135deg,rgba(67,56,202,0.08),rgba(12,119,146,0.08));border:1px solid rgba(67,56,202,0.25);border-radius:8px;padding:1.75rem;display:flex;align-items:center;gap:1.5rem;opacity:0;transform:translateY(16px);transition:all 0.5s ease}
+.lab-future.visible{opacity:1;transform:translateY(0)}
+.lab-future-icon{width:56px;height:56px;background:rgba(67,56,202,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--purple);font-size:1.5rem;flex-shrink:0;animation:float2 4s ease-in-out infinite}
+@keyframes float2{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.lab-future h4{color:var(--purple);margin-bottom:0.5rem}
+.lab-future p{color:var(--text2);font-size:0.95rem;margin:0}
+
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.pillar{background:var(--glass);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:8px;padding:1.75rem;text-align:center;transition:all 0.25s ease;position:relative;overflow:hidden}
+.pillar::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad1);transform:scaleX(0);transition:0.25s}
+.pillar:hover::before{transform:scaleX(1)}
+.pillar:hover{border-color:var(--accent);transform:translateY(-4px)}
+.pillar-icon{width:56px;height:56px;background:rgba(37,99,235,0.08);border-radius:10px;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;font-size:1.5rem;color:var(--accent);transition:all 0.25s ease}
+.pillar:hover .pillar-icon{background:var(--accent);color:#fff}
+.pillar h4{font-size:1.1rem;margin-bottom:0.75rem}
+.pillar p{font-size:0.9rem;color:var(--text2)}
+.custom-icon{width:28px;height:28px;object-fit:contain}
+.skill-icon{width:20px;height:20px;object-fit:contain;margin-right:0.5rem}
+.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem}
+.skill-list{display:flex;flex-direction:column;gap:1.5rem}
+.skill-item{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:1.25rem;transition:all 0.25s ease}
+.skill-item:hover{border-color:var(--accent);transform:translateX(3px)}
+.skill-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem}
+.skill-name{display:flex;align-items:center;font-weight:600}
+.skill-name i{color:var(--accent);margin-right:0.5rem}
+.skill-level{font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--cyan)}
+.skill-bar{height:8px;background:var(--bg);border-radius:4px;overflow:hidden}
+.skill-progress{height:100%;background:var(--grad1);border-radius:4px;width:0;transition:width 1.5s}
+.focus-areas h3{font-size:1.5rem;margin-bottom:1.5rem}
+.focus-grid{display:grid;gap:1rem}
+.focus-item{display:flex;align-items:flex-start;gap:1rem;padding:1.25rem;background:var(--bg3);border:1px solid var(--border);border-radius:8px;transition:all 0.25s ease}
+.focus-item:hover{border-color:var(--accent)}
+.focus-icon{width:42px;height:42px;background:rgba(37,99,235,0.08);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--accent);flex-shrink:0}
+.focus-content h4{font-size:1rem;margin-bottom:0.25rem}
+.focus-content p{font-size:0.85rem;color:var(--text2);margin:0}
+.certs-section{background:var(--bg2)}
+.certs-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
+.certs-col h3{display:flex;align-items:center;gap:0.75rem;font-size:1.25rem;margin-bottom:1.5rem}
+.certs-col.earned h3{color:var(--green)}
+.certs-col.learning h3{color:var(--text2)}
+.cert-card{display:flex;align-items:center;gap:1.25rem;padding:1.25rem;background:var(--glass);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:8px;margin-bottom:1rem;transition:all 0.25s ease}
+.cert-card:hover{border-color:var(--accent);transform:translateX(3px)}
+.cert-icon{width:56px;height:56px;border-radius:8px;object-fit:contain;background:var(--bg2);padding:8px}
+.cert-info h4{font-size:1rem;margin-bottom:0.25rem}
+.cert-info p{color:var(--text3);font-size:0.85rem;margin:0}
+.cert-status{margin-left:auto;padding:0.35rem 0.7rem;border-radius:4px;font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.03em}
+.cert-status.earned{background:rgba(13,150,104,0.1);color:var(--green)}
+.cert-status.progress{background:rgba(194,133,12,0.1);color:var(--yellow)}
+
+/* Project Cards - Enhanced Enterprise Design */
+.projects-intro{max-width:720px;margin:0 auto 3rem;text-align:center}
+.projects-intro p{color:var(--text2);font-size:1.05rem;line-height:1.8}
+.project-filters{display:flex;justify-content:center;gap:0.5rem;margin-bottom:2.5rem;flex-wrap:wrap}
+.project-filter{padding:0.5rem 1rem;background:var(--bg3);border:1px solid var(--border);border-radius:6px;font-size:0.85rem;color:var(--text2);cursor:pointer;transition:all 0.2s}
+.project-filter:hover,.project-filter.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.project-card{background:var(--glass);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:all 0.25s ease,opacity 0.2s ease;cursor:pointer;position:relative;display:flex;flex-direction:column}
+.project-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad1);transform:scaleX(0);transition:transform 0.25s ease}
+.project-card:hover::before{transform:scaleX(1)}
+.project-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,0.25)}
+.project-card-top{padding:1.5rem 1.5rem 0;display:flex;justify-content:space-between;align-items:start}
+.project-icon{width:48px;height:48px;background:rgba(37,99,235,0.08);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;color:var(--accent);transition:all 0.25s ease}
+.project-card:hover .project-icon{background:var(--accent);color:#fff}
+.project-badges{display:flex;gap:0.4rem;flex-wrap:wrap}
+.project-badge{padding:0.25rem 0.5rem;background:rgba(194,133,12,0.1);border:1px solid rgba(194,133,12,0.2);border-radius:4px;font-size:0.6rem;font-weight:600;color:var(--yellow);text-transform:uppercase;letter-spacing:0.04em}
+.project-badge.platform{background:rgba(37,99,235,0.1);border-color:rgba(37,99,235,0.2);color:var(--accent)}
+.project-content{padding:1.25rem 1.5rem 1.5rem;flex:1;display:flex;flex-direction:column}
+.project-title{font-size:1.1rem;font-weight:700;margin-bottom:0.5rem;line-height:1.3}
+.project-desc{color:var(--text2);font-size:0.875rem;line-height:1.65;margin-bottom:1rem;flex:1}
+.project-meta{display:flex;gap:1rem;margin-bottom:1rem;padding-top:0.75rem;border-top:1px solid var(--border)}
+.project-meta-item{display:flex;align-items:center;gap:0.35rem;font-size:0.7rem;color:var(--text3)}
+.project-meta-item i{font-size:0.65rem;color:var(--accent)}
+.project-tags{display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:1rem}
+.project-tag{padding:0.25rem 0.5rem;background:var(--bg2);border-radius:5px;font-size:0.7rem;color:var(--text3)}
+.project-footer{display:flex;justify-content:space-between;align-items:center}
+.project-link{display:flex;align-items:center;gap:0.4rem;color:var(--accent);font-weight:600;font-size:0.85rem}
+.project-link i{transition:0.25s;font-size:0.75rem}
+.project-card:hover .project-link i{transform:translateX(5px)}
+.project-complexity{display:flex;gap:2px}
+.project-complexity span{width:16px;height:4px;background:var(--border);border-radius:2px}
+.project-complexity.med span.filled{background:var(--yellow)}
+.project-complexity.high span.filled{background:var(--green)}
+
+/* AI Statement Enhanced */
+.ai-statement{margin-top:3rem;padding:2rem;background:linear-gradient(135deg,rgba(37,99,235,0.05),rgba(187,154,247,0.05));border:1px solid var(--border);border-radius:12px;position:relative;overflow:hidden}
+.ai-statement::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad1)}
+.ai-header{display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem}
+.ai-icon{width:48px;height:48px;background:rgba(37,99,235,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:1.25rem}
+.ai-header h3{font-size:1.15rem;margin:0}
+.ai-statement p{color:var(--text2);line-height:1.7;margin-bottom:0.75rem}
+.ai-statement ul{margin:0.75rem 0 0.75rem 1.5rem;color:var(--text2)}
+.ai-statement li{margin-bottom:0.4rem;line-height:1.6}
+
+/* Projects Philosophy Quote */
+.projects-philosophy{text-align:center;margin-top:3rem;padding:2rem;position:relative}
+.projects-philosophy::before{content:'"';font-size:4rem;color:var(--accent);opacity:0.15;position:absolute;top:0;left:50%;transform:translateX(-50%);font-family:Georgia,serif}
+.projects-philosophy p{font-size:1rem;color:var(--text2);font-style:italic;line-height:1.8;max-width:600px;margin:0 auto}
+
+/* Project Modal */
+.project-modal{position:fixed;inset:0;background:rgba(0,0,0,0.95);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);z-index:2000;display:flex;align-items:center;justify-content:center;padding:2rem;opacity:0;visibility:hidden;transition:0.3s}
+.project-modal.active{opacity:1;visibility:visible}
+.project-modal-content{background:var(--card);border:1px solid var(--border);border-radius:12px;max-width:900px;width:100%;max-height:90vh;overflow-y:auto;transform:translateY(20px) scale(0.98);transition:all 0.3s ease}
+.project-modal.active .project-modal-content{transform:translateY(0) scale(1)}
+.project-modal-header{padding:1.75rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:start;position:sticky;top:0;background:var(--card);z-index:10}
+.project-modal-title{font-size:1.5rem;font-weight:700;margin-bottom:0.4rem}
+.project-modal-sub{color:var(--text2);font-size:0.95rem}
+.project-modal-close{background:var(--bg3);border:1px solid var(--border);color:var(--text);width:40px;height:40px;border-radius:8px;font-size:1.1rem;cursor:pointer;transition:all 0.2s ease;display:flex;align-items:center;justify-content:center}
+.project-modal-close:hover{background:var(--red);border-color:var(--red);color:#fff}
+.project-modal-body{padding:2rem}
+.project-modal-section{margin-bottom:2rem}
+.project-modal-section h4{font-size:1.1rem;margin-bottom:1rem;color:var(--accent);display:flex;align-items:center;gap:0.5rem}
+.project-modal-section p,.project-modal-section li{color:var(--text2);line-height:1.8}
+.project-modal-section ul{margin-left:1.5rem}
+.project-modal-section li{margin-bottom:0.5rem}
+.project-tech{display:flex;flex-wrap:wrap;gap:0.75rem;margin-top:1rem}
+.project-tech span{padding:0.5rem 1rem;background:var(--bg3);border:1px solid var(--border);border-radius:8px;font-size:0.85rem;color:var(--cyan);font-family:'JetBrains Mono',monospace}
+.project-code{background:#0a1628;border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin-top:1rem;overflow-x:auto}
+.project-code pre{font-family:'JetBrains Mono',monospace;font-size:0.85rem;color:var(--text2);margin:0;white-space:pre-wrap}
+.project-code .comment{color:var(--text3)}
+.project-evidence{display:grid;gap:1rem;margin-top:1rem}
+.project-evidence-item{border-radius:8px;overflow:hidden;border:1px solid var(--border);background:var(--bg)}
+.project-evidence-item img{width:100%;height:auto;display:block}
+.project-evidence-item video{width:100%;height:auto;display:block}
+.project-evidence-item iframe{width:100%;aspect-ratio:16/9;border:none;display:block}
+.evidence-caption{padding:0.75rem 1rem;font-size:0.8rem;color:var(--text3);background:var(--bg2);border-top:1px solid var(--border)}
+.evidence-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:768px){.evidence-grid{grid-template-columns:1fr}}
+.project-code .keyword{color:var(--accent)}
+.project-code .string{color:var(--green)}
+.project-code .var{color:var(--cyan)}
+
+.ai-statement{margin-top:3rem;padding:2rem;background:var(--bg3);border:1px solid var(--border);border-radius:10px;position:relative;overflow:hidden}
+.ai-statement::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--purple),var(--cyan))}
+.ai-header{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
+.ai-icon{width:48px;height:48px;background:rgba(67,56,202,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--purple);font-size:1.2rem}
+.ai-statement h3{font-size:1.15rem}
+.ai-statement>p{color:var(--text2);line-height:1.7;margin-bottom:1rem}
+.ai-statement ul{color:var(--text2);margin:0 0 1rem 1.5rem}
+.ai-statement li{margin-bottom:0.5rem}
+.contact-section{background:var(--bg2)}
+.contact-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1.5rem;max-width:1200px;margin:0 auto}
+.contact-card{background:var(--glass);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:10px;padding:1.75rem;text-align:center;text-decoration:none;color:inherit;cursor:pointer;transition:all 0.2s ease;font-family:inherit}
+.contact-card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,0.15)}
+.contact-icon{width:56px;height:56px;background:rgba(37,99,235,0.08);border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;transition:all 0.25s ease}
+.contact-icon img{width:28px;height:28px}
+.contact-card:hover .contact-icon{background:var(--accent)}
+.contact-card:hover .contact-icon img{filter:brightness(10)}
+.contact-title{font-weight:700;margin-bottom:0.25rem}
+.contact-value{color:var(--text2);font-size:0.9rem}
+.tagline{text-align:center;margin-top:3rem;font-size:1.1rem;color:var(--text3)}
+.tagline strong{color:var(--accent)}
+footer{padding:2rem 5%;text-align:center;border-top:1px solid var(--border);color:var(--text3);font-size:0.85rem}
+.sticky-cta{position:fixed;bottom:24px;right:24px;background:var(--grad1);color:#fff;padding:0.875rem 1.25rem;border-radius:8px;font-weight:600;box-shadow:0 4px 20px rgba(37,99,235,0.3);transition:all 0.25s ease;z-index:999;display:flex;align-items:center;gap:0.5rem;border:none;cursor:pointer;font-family:inherit;font-size:0.9rem}
+.sticky-cta:hover{transform:translateY(-3px);box-shadow:0 6px 24px rgba(37,99,235,0.4)}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.9);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);z-index:2000;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;visibility:hidden;transition:0.3s}
+.modal-overlay.active{opacity:1;visibility:visible}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:12px;max-width:460px;width:100%;max-height:90vh;overflow-y:auto;transform:translateY(16px) scale(0.98);transition:all 0.25s ease}
+.modal-overlay.active .modal{transform:translateY(0) scale(1)}
+.modal-header{padding:1.75rem 1.75rem 0;display:flex;justify-content:space-between;align-items:start}
+.modal-title{font-size:1.25rem;font-weight:700;margin-bottom:0.4rem}
+.modal-subtitle{font-size:0.85rem;color:var(--text2)}
+.modal-close{background:transparent;border:none;color:var(--text3);font-size:1.75rem;cursor:pointer;transition:0.3s}
+.modal-close:hover{color:var(--text);transform:rotate(90deg)}
+.modal-body{padding:2rem}
+.form-group{margin-bottom:1.5rem}
+.form-label{display:block;font-size:0.9rem;font-weight:600;margin-bottom:0.5rem}
+.form-label .required{color:var(--red)}
+.form-input,.form-textarea{width:100%;padding:0.8rem 0.9rem;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:0.95rem;font-family:inherit;transition:all 0.2s ease}
+.form-input:focus,.form-textarea:focus{outline:none;border-color:var(--accent)}
+.form-textarea{resize:vertical;min-height:100px}
+.form-error{color:var(--red);font-size:0.8rem;margin-top:0.4rem;display:none}
+.form-group.error .form-error{display:block}
+.form-group.error .form-input{border-color:var(--red)}
+.modal-footer{padding:0 2rem 2rem}
+.btn-submit{width:100%;padding:0.875rem;background:var(--grad1);color:#fff;border:none;border-radius:6px;font-size:0.95rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.5rem;transition:all 0.2s ease;font-family:inherit}
+.btn-submit:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(37,99,235,0.3)}
+.btn-submit.loading .btn-text{display:none}
+.btn-submit .spinner{display:none}
+.btn-submit.loading .spinner{display:inline-block}
+.spinner{width:20px;height:20px;border:2px solid transparent;border-top-color:currentColor;border-radius:50%;animation:spin 0.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.modal-success{text-align:center;padding:2rem;display:none}
+.modal-success.active{display:block}
+.modal-form.hidden{display:none}
+.success-icon{width:72px;height:72px;background:rgba(13,150,104,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;color:var(--green);font-size:1.75rem}
+.success-title{font-size:1.2rem;font-weight:700;margin-bottom:0.4rem}
+.success-text{color:var(--text2);margin-bottom:1.25rem;font-size:0.95rem}
+.btn-download{display:inline-flex;align-items:center;gap:0.5rem;padding:0.875rem 1.25rem;background:var(--green);color:#fff;border-radius:6px;font-weight:600;text-decoration:none;transition:all 0.2s ease;border:none;cursor:pointer;font-family:inherit;font-size:0.9rem}
+.btn-download:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(13,150,104,0.3)}
+.fade-in{opacity:0;transform:translateY(20px);transition:all 0.5s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+@media(max-width:1024px){.hero-content{grid-template-columns:1fr;text-align:center}.hero-visual{order:-1;margin-bottom:2rem}.hero-desc{margin:0 auto 2rem}.role-card{max-width:500px;margin:0 auto 2rem}.cert-badges,.cta-group,.social-links{justify-content:center}.about-grid,.skills-grid,.certs-grid,.lab-grid{grid-template-columns:1fr}.projects-grid{grid-template-columns:repeat(2,1fr)}.contact-grid{grid-template-columns:repeat(3,1fr)}.stats-row{grid-template-columns:repeat(2,1fr)}.pillars{grid-template-columns:repeat(2,1fr)}.lab-future{flex-direction:column;text-align:center}}
+@media(max-width:768px){.nav-links{display:none;position:absolute;top:100%;left:0;right:0;background:var(--bg);border-bottom:1px solid var(--border);flex-direction:column;padding:1rem}.nav-links.active{display:flex}.mobile-toggle{display:flex}section{padding:4rem 5%}.hero-title{font-size:2rem}.hero-img{width:240px;height:240px}.pillars{grid-template-columns:1fr}.projects-grid{grid-template-columns:1fr}.contact-grid,.stats-row{grid-template-columns:1fr}.project-modal-content{margin:1rem}.project-filters{gap:0.35rem}.project-filter{padding:0.4rem 0.75rem;font-size:0.75rem}}
+@media(max-width:480px){.sticky-cta span{display:none}.orgs-grid{gap:2rem}.org-logo{height:35px}}
+</style>
+</head>
+<body>
+<div class="bg-effects"><div class="orb orb1"></div><div class="orb orb2"></div></div>
+<nav><div class="nav-c"><a href="#" class="logo"><img src="images/my-photo.jpg" alt=""><span>Andrew Symister</span></a><button class="mobile-toggle" aria-label="Menu"><span></span><span></span><span></span></button><ul class="nav-links" id="navLinks"><li><a href="#about">About</a></li><li><a href="#trajectory">Trajectory</a></li><li><a href="#projects">Projects</a></li><li><a href="#contact" class="nav-cta">Let's Talk</a></li></ul></div></nav>
+<main>
+<section class="hero" id="home"><div class="container"><div class="hero-content"><div class="fade-in"><div class="hero-badge"><i class="fas fa-circle"></i> Available for IAM Opportunities</div><h1 class="hero-title">I'm <span class="grad-text">Andrew Symister</span></h1><div class="typing"><span id="typingText"></span></div><p class="hero-desc">IAM Engineer with hands-on experience in enterprise identity operations across financial and SaaS environments. I support hybrid Entra ID and Active Directory workflows, strengthen access governance, and improve provisioning through automation.</p><div class="role-card"><div class="role-label">Current Position</div><div class="role-title">Technical Support Engineer</div><div class="role-company">Russell Investments</div><p class="role-details">Supporting identity infrastructure, provisioning workflows, RBAC, MFA, Conditional Access, and audit activity in a SOX-compliant financial services environment.</p></div><div class="cert-badges"><span class="cert-badge earned"><i class="fas fa-check-circle"></i> SC-300</span><span class="cert-badge earned"><i class="fas fa-check-circle"></i> Okta Certified</span><span class="cert-badge learning"><i class="fas fa-spinner"></i> Security+</span><span class="cert-badge learning"><i class="fas fa-spinner"></i> CyberArk Defender</span></div><div class="cta-group"><a href="#projects" class="btn btn-primary"><i class="fas fa-folder-open"></i> View Projects</a><button class="btn btn-green" onclick="openResumeModal()"><i class="fas fa-file-pdf"></i> Get Resume</button><button class="btn btn-secondary" onclick="openContactModal()"><i class="fas fa-paper-plane"></i> Contact</button></div><div class="social-links"><a href="mailto:asymister1@gmail.com" class="social-link"><i class="fas fa-envelope"></i> Email</a><a href="https://linkedin.com/in/andrewsymister" class="social-link" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i> LinkedIn</a><a href="https://github.com/asymister" class="social-link" target="_blank" rel="noopener"><i class="fab fa-github"></i> GitHub</a><a href="https://medium.com/@asymister1" class="social-link" target="_blank" rel="noopener"><i class="fab fa-medium"></i> Blog</a></div></div><div class="hero-visual fade-in"><div class="hero-img-wrap"><img src="images/my-photo.jpg" alt="Andrew Symister" class="hero-img"></div></div></div></div></section>
+
+<!-- Interactive Terminal -->
+<section style="padding:2rem 5%"><div class="container"><div class="terminal fade-in" id="iamTerminal" role="application" aria-label="Secure IAM CLI Session - Interactive demonstration"><div class="terminal-header"><div class="term-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 17l6-6-6-6" stroke="#7aa2f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 19h8" stroke="#7aa2f7" stroke-width="2" stroke-linecap="round"/></svg></div><span class="terminal-title">iam-ops — SSO Authenticated — MFA Verified</span><div class="term-theme-switch"><button class="term-theme-btn active" data-theme="default" title="Default" onclick="setTheme('default')"></button><button class="term-theme-btn" data-theme="entra" title="Entra ID" onclick="setTheme('entra')"></button><button class="term-theme-btn" data-theme="okta" title="Okta" onclick="setTheme('okta')"></button><button class="term-theme-btn" data-theme="aws" title="AWS" onclick="setTheme('aws')"></button><button class="term-theme-btn" data-theme="ping" title="Ping" onclick="setTheme('ping')"></button></div><div class="window-controls"><button class="term-info-btn" aria-label="About this simulation" onclick="toggleTermInfo()"><i class="fas fa-info-circle"></i></button><button class="win-btn" aria-label="Minimize" tabindex="-1"></button><button class="win-btn" aria-label="Maximize" tabindex="-1"></button><button class="win-btn" aria-label="Close" tabindex="-1"></button></div></div><div class="term-info-panel" id="termInfoPanel"><div class="term-info-content"><button class="term-info-close" onclick="toggleTermInfo()" aria-label="Close">&times;</button><h4><i class="fas fa-terminal"></i> What is this?</h4><p>This simulates how IAM engineers work in production — through <strong>SSO-authenticated CLI sessions</strong> with temporary credentials, MFA verification, and full audit logging.</p><p>Every command is traced. Risk is calculated. Approval boundaries are enforced. This is the quiet discipline of enterprise identity.</p><div class="term-info-note"><i class="fas fa-lightbulb"></i> Try: <code>lifecycle</code> <code>incident</code> <code>elevate</code> <code>context</code></div></div></div><div class="term-context-bar" id="termContextBar"><span class="term-ctx-item"><span class="term-ctx-label">Identity:</span><span class="term-ctx-value" id="ctxIdentity">andrew.symister</span></span><span class="term-ctx-divider">│</span><span class="term-ctx-item"><span class="term-ctx-label">Tenant:</span><span class="term-ctx-value" id="ctxTenant">contoso.com</span></span><span class="term-ctx-divider">│</span><span class="term-ctx-item"><span class="term-ctx-label">Role:</span><span class="term-ctx-value" id="ctxRole">User Admin</span></span><span class="term-ctx-divider">│</span><span class="term-ctx-item" id="ctxElevated" style="display:none"><span class="term-ctx-label">⚡</span><span class="term-ctx-value warn">PIM Elevated</span><span class="term-ctx-divider">│</span></span><span class="term-ctx-item"><span class="term-ctx-label">TTL:</span><span class="term-ctx-value" id="ctxTTL">7h 42m</span></span></div><div class="term-telemetry" id="termTelemetry"><span class="term-telem-pulse"></span><span class="term-telem-item"><span class="term-telem-label">Sign-ins:</span><span class="term-telem-value" id="telemSignins">847</span><span class="term-telem-label">/hr</span></span><span class="term-telem-item"><span class="term-telem-label">MFA Rate:</span><span class="term-telem-value" id="telemMFA">97.4%</span></span><span class="term-telem-item"><span class="term-telem-label">Queue:</span><span class="term-telem-value" id="telemQueue">12</span></span><span class="term-telem-item"><span class="term-telem-label">Blocked:</span><span class="term-telem-value" id="telemBlocked">3</span></span></div><div class="terminal-body" id="terminalBody" aria-live="polite"></div><div class="term-status-bar" aria-hidden="true"><div class="term-status-item"><span class="term-status-dot"></span>Session Active</div><div class="term-status-item">Audit: <span id="auditCount">0</span> events</div><div class="term-status-item">Env: <span id="envLabel">Production</span></div></div></div><div class="term-hint"><strong>Commands:</strong> <code>help</code> <code>users</code> <code>roles</code> <code>mfa</code> <code>audit</code> <code>sync</code> <code>review</code> <code>lifecycle</code> <code>incident</code> <code>elevate</code> <code>context</code> <code>tf-plan</code></div></div></section>
+
+<section class="orgs-section"><div class="container"><div class="section-header"><span class="badge fade-in"><i class="fas fa-briefcase"></i> Experience</span><h2 class="section-title fade-in">Organizations I've Supported</h2></div></div><div class="orgs-track" aria-label="Organizations carousel"><div class="orgs-grid"><img src="images/russell-investments.svg" alt="Russell Investments" class="org-logo"><img src="images/yotpo.svg" alt="Yotpo" class="org-logo"><img src="images/olo.svg" alt="Olo" class="org-logo"><img src="images/jetblue.svg" alt="JetBlue" class="org-logo"></div><div class="orgs-grid" aria-hidden="true"><img src="images/russell-investments.svg" alt="" class="org-logo"><img src="images/yotpo.svg" alt="" class="org-logo"><img src="images/olo.svg" alt="" class="org-logo"><img src="images/jetblue.svg" alt="" class="org-logo"></div></div></section>
+
+<section id="about"><div class="container"><div class="section-header"><span class="badge fade-in"><i class="fas fa-user"></i> About</span><h2 class="section-title fade-in">Identity Is Security & Enablement</h2></div><div class="about-grid"><div class="about-text fade-in"><p>I work daily in enterprise identity environments — managing provisioning workflows, enforcing secure authentication, and supporting access governance. My focus is <strong>balancing strong controls with user productivity</strong>.</p><p>Identity and Access Management sits at the intersection of cybersecurity operations, IT controls, and audit compliance. I operate in that intersection, supporting <strong>hybrid Entra ID and Active Directory infrastructures</strong> while building automation that reduces manual effort.</p><p>I bring analytical thinking and calm precision to identity operations. Whether troubleshooting an authentication issue, designing RBAC structures, or preparing access review documentation, I approach every task with a <strong>security-first mindset</strong>.</p><div class="stats-row"><div class="stat-card"><div class="stat-val">4+</div><div class="stat-label">Years Experience</div></div><div class="stat-card"><div class="stat-val">4</div><div class="stat-label">Organizations</div></div><div class="stat-card"><div class="stat-val">2</div><div class="stat-label">IAM Certs</div></div><div class="stat-card"><div class="stat-val">SOX</div><div class="stat-label">Compliance</div></div></div></div><div class="venn fade-in"><div class="venn-title">IAM: Where Security, IT & Compliance Meet</div><div class="venn-diagram"><div class="venn-circle v-cyber">Cybersecurity<br>Operations</div><div class="venn-circle v-it">IT<br>Controls</div><div class="venn-circle v-audit">Audit &<br>Compliance</div><div class="venn-center">IAM</div></div><p class="venn-caption">Identity is the control plane.</p></div></div></div></section>
+
+<section id="trajectory" style="background:var(--bg2)"><div class="container"><div class="section-header"><span class="badge fade-in"><i class="fas fa-route"></i> Career Path</span><h2 class="section-title fade-in">My IAM Engineering Trajectory</h2><p class="section-sub fade-in">A deliberate path from operations to enterprise identity architecture.</p></div><div class="trajectory"><div class="traj-step done"><div class="step-marker"><i class="fas fa-check"></i></div><div class="step-content"><div class="step-phase">Phase 1</div><h4>Desktop & Helpdesk Fundamentals</h4><p>Endpoints, accounts, authentication at OS & network level. Foundation for troubleshooting IAM flows.</p><div class="step-tags"><span>OS Auth</span><span>AD Basics</span><span>Troubleshooting</span></div></div></div><div class="traj-step done"><div class="step-marker"><i class="fas fa-check"></i></div><div class="step-content"><div class="step-phase">Phase 2</div><h4>Scripting & Automation</h4><p>PowerShell and Bash for provisioning, reports, and remediation across AD, Entra ID, and SaaS.</p><div class="step-tags"><span>PowerShell</span><span>Bash</span><span>Automation</span></div></div></div><div class="traj-step current"><div class="step-marker"><i class="fas fa-bolt"></i></div><div class="step-content"><div class="step-phase">Current</div><h4>IAM Operations & Security</h4><p>Hands-on identity operations in SOX-compliant environment. Building governance workflows, MFA policies, access reviews.</p><div class="step-tags"><span>Entra ID</span><span>Okta</span><span>RBAC</span><span>Governance</span></div></div></div><div class="traj-step future"><div class="step-marker"><i class="fas fa-arrow-right"></i></div><div class="step-content"><div class="step-phase">Next</div><h4>IAM Engineer & API Integration</h4><p>Joiner-Mover-Leaver automation, SCIM/REST APIs, multi-system identity fabric, IGA platforms.</p><div class="step-tags"><span>SCIM</span><span>REST APIs</span><span>midPoint</span><span>SailPoint</span></div></div></div><div class="traj-step future"><div class="step-marker"><i class="fas fa-star"></i></div><div class="step-content"><div class="step-phase">Goal</div><h4>Senior IAM Engineer</h4><p>Architect identity flows, governance strategy, PAM integration. Mentor teams, drive automation, innovate with AI.</p><div class="step-tags"><span>Architecture</span><span>IGA</span><span>PAM</span><span>AI + IAM</span></div></div></div></div></div></section>
+
+<section class="lab-section" id="lab"><div class="container"><div class="section-header"><span class="badge fade-in"><i class="fas fa-flask"></i> Building Now</span><h2 class="section-title fade-in">Enterprise Identity Fabric Lab</h2><p class="section-sub fade-in">Wiring together real SaaS + directory services for end-to-end identity lifecycle.</p></div><div class="lab-grid"><div class="lab-card"><div class="lab-icon"><img src="images/icons/icon-identity-sources.svg" alt="" class="custom-icon"></div><h4>Identity Sources & Targets</h4><p>HR → Okta as identity source. Okta → AWS, Salesforce, LDAP as targets. Real-world mappings.</p><div class="lab-stack"><span>Okta Dev</span><span>AWS Free</span><span>Salesforce Dev</span><span>OpenLDAP</span></div></div><div class="lab-card"><div class="lab-icon"><img src="images/icons/icon-jml.svg" alt="" class="custom-icon"></div><h4>Joiner → Mover → Leaver</h4><p>New hire = auto-provision. Department change = roles update. Termination = accounts revoked.</p><div class="lab-stack"><span>Okta Workflows</span><span>SCIM</span><span>REST APIs</span><span>midPoint</span></div></div><div class="lab-card"><div class="lab-icon"><img src="images/icons/icon-access-models.svg" alt="" class="custom-icon"></div><h4>RBAC, ABAC & PBAC</h4><p>Role = job function. Attributes = dept + location. Policy = risk-based decisions.</p><div class="lab-stack"><span>Role Modeling</span><span>Policies</span><span>OPA</span><span>Risk Engine</span></div></div><div class="lab-card"><div class="lab-icon"><img src="images/icons/icon-api-iam.svg" alt="" class="custom-icon"></div><h4>API-Driven IAM</h4><p>Create users, assign apps, rotate credentials, trigger workflows via code.</p><div class="lab-stack"><span>PowerShell</span><span>Python</span><span>Graph API</span><span>SCIM</span></div></div></div><div class="lab-future"><div class="lab-future-icon"><img src="images/icons/icon-ai-iam.svg" alt="" class="custom-icon"></div><div><h4>What's Next: AI + IAM</h4><p>Exploring AI-assisted access approval, risk scoring engines, RBAC role mining, and automated policy recommendations.</p></div></div></div></section>
+
+<section id="foundation"><div class="container"><div class="section-header"><span class="badge fade-in"><i class="fas fa-layer-group"></i> Philosophy</span><h2 class="section-title fade-in">Building Strong IAM Fundamentals</h2></div><div class="pillars"><div class="pillar fade-in"><div class="pillar-icon"><img src="images/icons/icon-scripting.svg" alt="" class="custom-icon"></div><h4>Scripting</h4><p>PowerShell, Bash, Python for automation and reporting</p></div><div class="pillar fade-in"><div class="pillar-icon"><img src="images/icons/icon-directories.svg" alt="" class="custom-icon"></div><h4>Directories & Data</h4><p>AD, LDAP, SQL, identity stores and sync</p></div><div class="pillar fade-in"><div class="pillar-icon"><img src="images/icons/icon-dashboard.svg" alt="" class="custom-icon"></div><h4>Dashboard Familiarity</h4><p>Building identity visibility tools</p></div><div class="pillar fade-in"><div class="pillar-icon"><img src="images/icons/icon-networking.svg" alt="" class="custom-icon"></div><h4>Networking</h4><p>DNS, TCP/IP, HTTPS, identity flows</p></div><div class="pillar fade-in"><div class="pillar-icon"><img src="images/icons/icon-protocols.svg" alt="" class="custom-icon"></div><h4>IAM Protocols</h4><p>SAML, OAuth2, OIDC, Kerberos, SCIM</p></div><div class="pillar fade-in"><div class="pillar-icon"><img src="images/icons/icon-cloud-iam.svg" alt="" class="custom-icon"></div><h4>Cloud IAM</h4><p>Azure, AWS IAM, infrastructure-as-code</p></div></div></div></section>
+
+
+
+<section class="certs-section" id="certifications"><div class="container"><div class="section-header"><span class="badge fade-in"><i class="fas fa-award"></i> Certifications</span><h2 class="section-title fade-in">Professional Credentials</h2></div><div class="certs-grid"><div class="certs-col earned fade-in"><h3><i class="fas fa-trophy"></i> Earned</h3><div class="cert-card"><img src="images/sc-300.png" alt="" class="cert-icon"><div class="cert-info"><h4>Microsoft SC-300</h4><p>Identity and Access Administrator</p></div><span class="cert-status earned">Verified</span></div><div class="cert-card"><img src="images/okta-certified.png" alt="" class="cert-icon"><div class="cert-info"><h4>Okta Certified Professional</h4><p>Identity Management</p></div><span class="cert-status earned">Verified</span></div></div><div class="certs-col learning fade-in"><h3><i class="fas fa-book-open"></i> In Progress</h3><div class="cert-card"><img src="images/security-plus.png" alt="" class="cert-icon"><div class="cert-info"><h4>CompTIA Security+</h4><p>Security Fundamentals</p></div><span class="cert-status progress">Studying</span></div><div class="cert-card"><img src="images/cyberark-defender.png" alt="" class="cert-icon"><div class="cert-info"><h4>CyberArk Defender</h4><p>Privileged Access Security</p></div><span class="cert-status progress">Studying</span></div></div></div></div></section>
+
+<section id="projects"><div class="container"><div class="section-header"><span class="badge fade-in"><i class="fas fa-folder-open"></i> Projects</span><h2 class="section-title fade-in">Hands-On Identity Work</h2></div><div class="projects-intro fade-in"><p>Lab implementations exploring real-world IAM challenges — authentication, provisioning, governance, and risk detection. Each project reflects how identity is actually managed in enterprise environments.</p></div><div class="project-filters fade-in"><button class="project-filter active" data-filter="all">All Projects</button><button class="project-filter" data-filter="auth">Authentication</button><button class="project-filter" data-filter="lifecycle">Lifecycle</button><button class="project-filter" data-filter="governance">Governance</button><button class="project-filter" data-filter="pam">PAM</button></div><div class="projects-grid">
+
+<div class="project-card fade-in" data-category="auth" onclick="openProjectModal('conditional-access')"><div class="project-card-top"><div class="project-icon"><img src="images/icons/icon-conditional-access.svg" alt="" class="custom-icon"></div><div class="project-badges"><span class="project-badge">Lab</span><span class="project-badge platform">Entra ID</span></div></div><div class="project-content"><h3 class="project-title">Conditional Access & MFA</h3><p class="project-desc">Risk-based authentication policies with break-glass accounts, FIDO2 security keys, and Zero Trust alignment.</p><div class="project-meta"><span class="project-meta-item"><i class="fas fa-shield-alt"></i> Zero Trust</span><span class="project-meta-item"><i class="fas fa-key"></i> FIDO2</span><span class="project-meta-item"><i class="fas fa-clipboard-check"></i> SOX</span></div><div class="project-tags"><span class="project-tag">Conditional Access</span><span class="project-tag">MFA</span><span class="project-tag">Identity Protection</span></div><div class="project-footer"><span class="project-link">View Details <i class="fas fa-arrow-right"></i></span><div class="project-complexity med"><span class="filled"></span><span class="filled"></span><span></span></div></div></div></div>
+
+<div class="project-card fade-in" data-category="lifecycle" onclick="openProjectModal('okta-sso')"><div class="project-card-top"><div class="project-icon"><img src="images/icons/icon-sso.svg" alt="" class="custom-icon"></div><div class="project-badges"><span class="project-badge">Lab</span><span class="project-badge platform">Okta</span></div></div><div class="project-content"><h3 class="project-title">Okta Workforce SSO</h3><p class="project-desc">Enterprise app onboarding with SAML/OIDC integrations, SCIM provisioning, and user lifecycle automation.</p><div class="project-meta"><span class="project-meta-item"><i class="fas fa-plug"></i> 15+ Apps</span><span class="project-meta-item"><i class="fas fa-sync"></i> SCIM</span><span class="project-meta-item"><i class="fas fa-users-cog"></i> JML</span></div><div class="project-tags"><span class="project-tag">SSO</span><span class="project-tag">SAML</span><span class="project-tag">OIDC</span><span class="project-tag">Provisioning</span></div><div class="project-footer"><span class="project-link">View Details <i class="fas fa-arrow-right"></i></span><div class="project-complexity high"><span class="filled"></span><span class="filled"></span><span class="filled"></span></div></div></div></div>
+
+<div class="project-card fade-in" data-category="pam" onclick="openProjectModal('cyberark-pam')"><div class="project-card-top"><div class="project-icon"><img src="images/icons/icon-pam.svg" alt="" class="custom-icon"></div><div class="project-badges"><span class="project-badge">Lab</span><span class="project-badge platform">CyberArk</span></div></div><div class="project-content"><h3 class="project-title">Privileged Identity Security</h3><p class="project-desc">PAM architecture design with vault hierarchies, credential rotation, JIT access, and session recording.</p><div class="project-meta"><span class="project-meta-item"><i class="fas fa-vault"></i> Safe Design</span><span class="project-meta-item"><i class="fas fa-clock"></i> JIT</span><span class="project-meta-item"><i class="fas fa-video"></i> PSM</span></div><div class="project-tags"><span class="project-tag">PAM</span><span class="project-tag">Vault</span><span class="project-tag">Session Control</span></div><div class="project-footer"><span class="project-link">View Details <i class="fas fa-arrow-right"></i></span><div class="project-complexity high"><span class="filled"></span><span class="filled"></span><span class="filled"></span></div></div></div></div>
+
+<div class="project-card fade-in" data-category="governance" onclick="openProjectModal('iam-dashboard')"><div class="project-card-top"><div class="project-icon"><img src="images/icons/icon-reporting.svg" alt="" class="custom-icon"></div><div class="project-badges"><span class="project-badge">Lab</span><span class="project-badge platform">PowerShell</span></div></div><div class="project-content"><h3 class="project-title">IAM Reporting Dashboard</h3><p class="project-desc">PowerShell-driven dashboard for real-time identity metrics, risk indicators, and audit compliance tracking.</p><div class="project-meta"><span class="project-meta-item"><i class="fas fa-chart-line"></i> Metrics</span><span class="project-meta-item"><i class="fas fa-exclamation-triangle"></i> Risk Score</span><span class="project-meta-item"><i class="fas fa-file-alt"></i> Reports</span></div><div class="project-tags"><span class="project-tag">Graph API</span><span class="project-tag">Automation</span><span class="project-tag">Compliance</span></div><div class="project-footer"><span class="project-link">View Details <i class="fas fa-arrow-right"></i></span><div class="project-complexity med"><span class="filled"></span><span class="filled"></span><span></span></div></div></div></div>
+
+<div class="project-card fade-in" data-category="auth" onclick="openProjectModal('ping-federation')"><div class="project-card-top"><div class="project-icon"><img src="images/icons/icon-federation.svg" alt="" class="custom-icon"></div><div class="project-badges"><span class="project-badge">Lab</span><span class="project-badge platform">PingFederate</span></div></div><div class="project-content"><h3 class="project-title">Federation Broker Lab</h3><p class="project-desc">Multi-IdP federation bridging Entra ID, Okta, and SaaS apps with signed assertions and attribute mapping.</p><div class="project-meta"><span class="project-meta-item"><i class="fas fa-network-wired"></i> Multi-IdP</span><span class="project-meta-item"><i class="fas fa-certificate"></i> Signed</span><span class="project-meta-item"><i class="fas fa-exchange-alt"></i> SAML</span></div><div class="project-tags"><span class="project-tag">Federation</span><span class="project-tag">SAML 2.0</span><span class="project-tag">Broker</span></div><div class="project-footer"><span class="project-link">View Details <i class="fas fa-arrow-right"></i></span><div class="project-complexity high"><span class="filled"></span><span class="filled"></span><span class="filled"></span></div></div></div></div>
+
+<div class="project-card fade-in" data-category="governance" onclick="openProjectModal('risk-analytics')"><div class="project-card-top"><div class="project-icon"><img src="images/icons/icon-risk-analytics.svg" alt="" class="custom-icon"></div><div class="project-badges"><span class="project-badge">Lab</span><span class="project-badge platform">IGA</span></div></div><div class="project-content"><h3 class="project-title">Identity Risk Analytics</h3><p class="project-desc">Dormant identity detection, orphaned access analysis, and governance-aligned risk signal monitoring.</p><div class="project-meta"><span class="project-meta-item"><i class="fas fa-search"></i> Detection</span><span class="project-meta-item"><i class="fas fa-user-clock"></i> Dormant</span><span class="project-meta-item"><i class="fas fa-unlink"></i> Orphaned</span></div><div class="project-tags"><span class="project-tag">Risk Analytics</span><span class="project-tag">Access Review</span><span class="project-tag">Audit</span></div><div class="project-footer"><span class="project-link">View Details <i class="fas fa-arrow-right"></i></span><div class="project-complexity med"><span class="filled"></span><span class="filled"></span><span></span></div></div></div></div>
+
+</div>
+
+<div class="projects-philosophy fade-in"><p>IAM runs quietly in the background, but it carries the weight of the system. Every login is checked. Every role validated. Every permission accounted for. These projects explore that quiet discipline.</p></div>
+
+<div class="ai-statement fade-in"><div class="ai-header"><div class="ai-icon"><i class="fas fa-robot"></i></div><h3>AI + IAM: The Future I'm Building Toward</h3></div><p>I use AI tools where they add value in IAM work today:</p><ul><li>Pattern spotting in logs and anomaly detection</li><li>Documentation assistance and policy generation</li><li>Accelerating learning and workflow automation</li></ul><p>But I'm also exploring where IAM is headed: AI-assisted access approval, risk scoring engines, automated role mining, and intelligent governance.</p></div></div></section>
+
+<section class="contact-section" id="contact"><div class="container"><div class="section-header"><span class="badge fade-in"><i class="fas fa-envelope"></i> Contact</span><h2 class="section-title fade-in">Let's Connect</h2></div><div class="contact-grid"><button class="contact-card fade-in" onclick="openResumeModal()"><div class="contact-icon"><img src="images/icon-resume.svg" alt=""></div><div class="contact-title">Resume</div><div class="contact-value">Download PDF</div></button><button class="contact-card fade-in" onclick="openContactModal()"><div class="contact-icon"><img src="images/icon-email.svg" alt=""></div><div class="contact-title">Email</div><div class="contact-value">Send Message</div></button><a href="https://linkedin.com/in/andrewsymister" class="contact-card fade-in" target="_blank" rel="noopener"><div class="contact-icon"><img src="images/icon-linkedin.svg" alt=""></div><div class="contact-title">LinkedIn</div><div class="contact-value">/in/andrewsymister</div></a><a href="https://github.com/asymister" class="contact-card fade-in" target="_blank" rel="noopener"><div class="contact-icon"><img src="images/icon-github.svg" alt=""></div><div class="contact-title">GitHub</div><div class="contact-value">@asymister</div></a><a href="https://medium.com/@asymister1" class="contact-card fade-in" target="_blank" rel="noopener"><div class="contact-icon"><img src="images/medium-logo.png" alt="" style="filter:invert(1)"></div><div class="contact-title">Blog</div><div class="contact-value">@asymister1</div></a></div><p class="tagline fade-in"><strong>Building toward Senior IAM Engineer. API-driven automation. Enterprise identity architecture.</strong></p></div></section>
+</main>
+<footer><p>&copy; 2025 Andrew Symister · IAM Engineer</p></footer>
+<button class="sticky-cta" onclick="openContactModal()"><i class="fas fa-paper-plane"></i><span>Let's Talk</span></button>
+
+<!-- Project Modal -->
+<div id="projectModal" class="project-modal"><div class="project-modal-content"><div class="project-modal-header"><div><h3 class="project-modal-title" id="pmTitle"></h3><p class="project-modal-sub" id="pmSub"></p></div><button class="project-modal-close" onclick="closeProjectModal()"><i class="fas fa-times"></i></button></div><div class="project-modal-body" id="pmBody"></div></div></div>
+
+<!-- Resume Modal -->
+<div id="resumeModal" class="modal-overlay"><div class="modal"><div class="modal-header"><div><h3 class="modal-title">Request My Resume</h3><p class="modal-subtitle">Share your details to access my resume.</p></div><button class="modal-close" onclick="closeResumeModal()">&times;</button></div><form id="resumeForm" class="modal-form" action="https://formspree.io/f/mvzoqqod" method="POST"><div class="modal-body"><input type="hidden" name="_subject" value="Resume Request"><div class="form-group"><label class="form-label">Name <span class="required">*</span></label><input type="text" name="name" class="form-input" required><div class="form-error">Required</div></div><div class="form-group"><label class="form-label">Company <span class="required">*</span></label><input type="text" name="company" class="form-input" required><div class="form-error">Required</div></div><div class="form-group"><label class="form-label">Email <span class="required">*</span></label><input type="email" name="email" class="form-input" required><div class="form-error">Valid email required</div></div><div class="form-group"><label class="form-label">Purpose</label><textarea name="reason" class="form-textarea"></textarea></div></div><div class="modal-footer"><button type="submit" class="btn-submit"><span class="btn-text"><i class="fas fa-paper-plane"></i> Submit</span><span class="spinner"></span></button></div></form><div id="resumeSuccess" class="modal-success"><div class="success-icon"><i class="fas fa-check"></i></div><h4 class="success-title">Success!</h4><p class="success-text">Your resume is ready.</p><a href="resume/Andrew_Symister_IAM_Resume.pdf" target="_blank" class="btn-download"><i class="fas fa-download"></i> Download Resume</a></div></div></div>
+
+<!-- Contact Modal -->
+<div id="contactModal" class="modal-overlay"><div class="modal"><div class="modal-header"><div><h3 class="modal-title">Get In Touch</h3><p class="modal-subtitle">Have a question or opportunity?</p></div><button class="modal-close" onclick="closeContactModal()">&times;</button></div><form id="contactForm" class="modal-form" action="https://formspree.io/f/mvzoqqod" method="POST"><div class="modal-body"><input type="hidden" name="_subject" value="Contact Form"><div class="form-group"><label class="form-label">Name <span class="required">*</span></label><input type="text" name="name" class="form-input" required><div class="form-error">Required</div></div><div class="form-group"><label class="form-label">Email <span class="required">*</span></label><input type="email" name="email" class="form-input" required><div class="form-error">Valid email required</div></div><div class="form-group"><label class="form-label">Message <span class="required">*</span></label><textarea name="message" class="form-textarea" required></textarea><div class="form-error">Required</div></div></div><div class="modal-footer"><button type="submit" class="btn-submit"><span class="btn-text"><i class="fas fa-paper-plane"></i> Send</span><span class="spinner"></span></button></div></form><div id="contactSuccess" class="modal-success"><div class="success-icon"><i class="fas fa-check"></i></div><h4 class="success-title">Sent!</h4><p class="success-text">I'll get back to you soon.</p><button class="btn-download" onclick="closeContactModal()" style="background:var(--accent)">Close</button></div></div></div>
+
+<script>
+// Typing Animation
+const phrases=['IAM Engineer','Identity Lifecycle','Access Governance','API-Driven IAM','Joiner-Mover-Leaver','SCIM Integration','Zero Trust'];
+let pi=0,ci=0,del=false;const te=document.getElementById('typingText');
+function type(){if(!te)return;const p=phrases[pi];if(del){te.textContent=p.substring(0,ci-1);ci--}else{te.textContent=p.substring(0,ci+1);ci++}let d=del?30:80;if(!del&&ci===p.length){d=2500;del=true}else if(del&&ci===0){del=false;pi=(pi+1)%phrases.length;d=500}setTimeout(type,d)}type();
+
+// Interactive Terminal - Enterprise IAM CLI Simulation
+const tb=document.getElementById('terminalBody');
+const t=()=>new Date().toLocaleTimeString('en-US',{hour12:false});
+const d=()=>new Date().toISOString().split('T')[0];
+
+// Terminal State (Context Memory)
+const termState={
+  identity:'andrew.symister',
+  tenant:'contoso.com',
+  role:'User Admin',
+  env:'Production',
+  elevated:false,
+  auditCount:0,
+  cmdHistory:[]
+};
+
+// Telemetry (simulated live data)
+let telemInterval;
+function updateTelemetry(){
+  const signins=847+Math.floor(Math.random()*20)-10;
+  const mfa=(97.2+Math.random()*0.4).toFixed(1);
+  const queue=Math.floor(Math.random()*8)+8;
+  const blocked=Math.floor(Math.random()*5)+1;
+  document.getElementById('telemSignins').textContent=signins;
+  document.getElementById('telemMFA').textContent=mfa+'%';
+  document.getElementById('telemQueue').textContent=queue;
+  document.getElementById('telemBlocked').textContent=blocked;
+}
+telemInterval=setInterval(updateTelemetry,5000);
+
+// Theme switching
+function setTheme(theme){
+  const term=document.getElementById('iamTerminal');
+  term.className='terminal fade-in visible'+(theme!=='default'?' theme-'+theme:'');
+  document.querySelectorAll('.term-theme-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelector('[data-theme="'+theme+'"]').classList.add('active');
+}
+
+function toggleTermInfo(){document.getElementById('termInfoPanel').classList.toggle('active')}
+
+// Wisdom notes (appear occasionally)
+const wisdomNotes=[
+  'IAM runs quietly in the background — its value is proven in the stability it creates.',
+  'Every login is checked. Every role validated. Every permission accounted for.',
+  'The cycle never stops, because the risks never stop.',
+  'Least privilege isn\'t a policy — it\'s a discipline.',
+  'Access reviews prevent tomorrow\'s audit findings.',
+  'Temporary credentials reduce blast radius.',
+  'MFA isn\'t optional for privileged access.',
+  'Audit trails are your future self\'s best friend.'
+];
+let wisdomShown=0;
+
+function maybeShowWisdom(){
+  if(Math.random()<0.15&&wisdomShown<3){
+    wisdomShown++;
+    const note=wisdomNotes[Math.floor(Math.random()*wisdomNotes.length)];
+    addTermLine('<div class="term-wisdom">'+note+'</div>');
+  }
+}
+
+// Audit echo for commands
+function addAuditEcho(cmd,risk='low'){
+  termState.auditCount++;
+  document.getElementById('auditCount').textContent=termState.auditCount;
+  const id='AUD-'+Date.now().toString(36).toUpperCase().slice(-6);
+  const riskClass='term-risk-'+risk;
+  addTermLine('<div class="term-audit-echo"><span class="term-audit-id">'+id+'</span> '+t()+' │ '+cmd+' │ <span class="term-risk '+riskClass+'">'+risk.toUpperCase()+'</span></div>');
+}
+
+// Update context bar
+function updateContext(){
+  document.getElementById('ctxIdentity').textContent=termState.identity;
+  document.getElementById('ctxTenant').textContent=termState.tenant;
+  document.getElementById('ctxRole').textContent=termState.role;
+  document.getElementById('envLabel').textContent=termState.env;
+  document.getElementById('ctxElevated').style.display=termState.elevated?'flex':'none';
+}
+
+// Commands with approval indicators and risk levels
+const commands={
+help:{out:['<span class="term-hl">IAM Operations CLI</span> — Secure Session Commands','','<span class="term-dim">SESSION</span>     context, elevate, whoami','<span class="term-dim">IDENTITY</span>    users, roles, mfa','<span class="term-dim">LIFECYCLE</span>   lifecycle, review, sync','<span class="term-dim">AUDIT</span>       audit','<span class="term-dim">IaC</span>         tf-plan','<span class="term-dim">RESPONSE</span>    incident','<span class="term-dim">SYSTEM</span>      clear','','<span class="term-dim">Approval: </span><span class="term-approval term-approval-auto">AUTO</span> automated  <span class="term-approval term-approval-human">HUMAN</span> requires approval  <span class="term-approval term-approval-review">REVIEW</span> needs peer review'],risk:'low',approval:'auto'},
+
+context:{out:['<span class="term-hl">SESSION CONTEXT</span>','','<span class="term-out">Identity</span>     andrew.symister@contoso.com','<span class="term-out">Tenant</span>       contoso.com (Production)','<span class="term-out">Role</span>         User Administrator','<span class="term-out">Elevation</span>    '+(termState.elevated?'<span class="term-warn">PIM Active (45m remaining)</span>':'<span class="term-dim">Standard (not elevated)</span>'),'<span class="term-out">MFA</span>          FIDO2 Security Key','<span class="term-out">TTL</span>          7h 42m remaining','<span class="term-out">Device</span>       Compliant (Intune managed)','<span class="term-out">Audit</span>        '+termState.auditCount+' commands logged this session'],risk:'low',approval:'auto'},
+
+elevate:{out:['<span class="term-dim">$</span> az ad pim role activate --role "Privileged Role Administrator"','','<span class="term-system">[PIM]</span> Requesting elevation... <span class="term-approval term-approval-human">HUMAN</span>','','<span class="term-warn">⚠</span> This action requires justification and approval','<span class="term-out">Justification:</span> Quarterly access review administration','<span class="term-out">Approver:</span> security-team@contoso.com','<span class="term-out">Duration:</span> 1 hour (max: 8 hours)','','<span class="term-success">✓</span> Elevation approved by: j.smith@contoso.com','<span class="term-success">✓</span> Role activated: Privileged Role Administrator','<span class="term-warn">⚡</span> Elevated session active — all actions logged to SIEM','','<span class="term-dim">Reminder: Elevated privileges expire automatically. Deactivate early if done.</span>'],risk:'high',approval:'human',onRun:()=>{termState.elevated=true;termState.role='Priv Role Admin';updateContext()}},
+
+users:{out:['<span class="term-dim">$</span> az ad user list --query "[?accountEnabled==true]" | head <span class="term-approval term-approval-auto">AUTO</span>','','<span class="term-out">DisplayName              UPN                              Risk      LastSignIn</span>','<span class="term-out">───────────────────────────────────────────────────────────────────────────────</span>','Sarah Chen               sarah.chen@contoso.com           <span class="term-risk term-risk-low">LOW</span>     '+d(),'James Wilson             james.wilson@contoso.com         <span class="term-risk term-risk-low">LOW</span>     '+d(),'Maria Garcia             maria.garcia@contoso.com         <span class="term-risk term-risk-med">MED</span>     2024-12-28','David Kim                david.kim@contoso.com            <span class="term-risk term-risk-high">HIGH</span>    2024-10-15','<span class="term-dim">                         └─ 76 days inactive, privileged role</span>','','<span class="term-dim">Showing 4 of 1,247 users | Risk scoring: activity + privilege + compliance</span>'],risk:'low',approval:'auto'},
+
+mfa:{out:['<span class="term-dim">$</span> Get-MgUserAuthenticationMethod -All | Group-Object <span class="term-approval term-approval-auto">AUTO</span>','','<span class="term-out">Method                 Count    Coverage    Risk</span>','<span class="term-out">─────────────────────────────────────────────────</span>','FIDO2 Security Key     847      <span class="term-success">67.9%</span>      <span class="term-risk term-risk-low">LOW</span>','Microsoft Authenticator 1,156   <span class="term-success">92.7%</span>      <span class="term-risk term-risk-low">LOW</span>','Phone (SMS)            234      <span class="term-warn">18.8%</span>      <span class="term-risk term-risk-med">MED</span>','<span class="term-dim">                       └─ phishing-susceptible</span>','Email                  89       <span class="term-dim">7.1%</span>       <span class="term-risk term-risk-high">HIGH</span>','<span class="term-dim">                       └─ not recommended for sensitive access</span>','','<span class="term-success">✓</span> Total MFA coverage: <span class="term-success">97.4%</span>','<span class="term-warn">⚠</span> 32 users pending enrollment (grace period: 7d)'],risk:'low',approval:'auto'},
+
+roles:{out:['<span class="term-dim">$</span> az role assignment list --scope "/subscriptions/prod" <span class="term-approval term-approval-auto">AUTO</span>','','<span class="term-out">Role                    Scope           Assignments   Review     Risk</span>','<span class="term-out">─────────────────────────────────────────────────────────────────────</span>','Global Administrator   Tenant          4             <span class="term-error">Overdue</span>    <span class="term-risk term-risk-crit">CRIT</span>','User Administrator     Tenant          23            <span class="term-success">Current</span>    <span class="term-risk term-risk-high">HIGH</span>','Security Reader        Subscription    156           <span class="term-success">Q4-2024</span>    <span class="term-risk term-risk-med">MED</span>','Contributor            Resource Group  412           <span class="term-warn">Pending</span>    <span class="term-risk term-risk-med">MED</span>','','<span class="term-dim">SOX Control IAM-007: Privileged roles require quarterly access review</span>'],risk:'low',approval:'auto'},
+
+review:{out:['<span class="term-dim">$</span> Start-MgAccessReviewInstance -PolicyId "privileged-roles-q4" <span class="term-approval term-approval-review">REVIEW</span>','','<span class="term-system">[AccessReview]</span> Launching Q4-2024 Privileged Access Review...','','<span class="term-warn">⚠</span> This action requires peer review before execution','<span class="term-out">Reviewer assigned:</span> m.johnson@contoso.com','<span class="term-success">✓</span> Review approved — proceeding...','','<span class="term-success">✓</span> Scope: Global Admin, User Admin, Security Admin','<span class="term-success">✓</span> Reviewers: Role owners + Security team','<span class="term-success">✓</span> Duration: 14 days','<span class="term-success">✓</span> Auto-revoke on non-response: enabled','','<span class="term-out">Campaign ID: AR-2024-Q4-PRIV</span>','<span class="term-out">Total entitlements: 847 | Auto-approved: 412 | Pending review: 435</span>'],risk:'med',approval:'review'},
+
+sync:{out:['<span class="term-dim">$</span> okta apps scim sync --trigger <span class="term-approval term-approval-auto">AUTO</span>','','<span class="term-system">[SCIM]</span> Triggering provisioning sync: Okta → downstream apps','','<span class="term-out">Target              Users     Status    Duration   Risk</span>','<span class="term-out">──────────────────────────────────────────────────────</span>','AWS IAM IC          347       <span class="term-success">✓ 201</span>    1.2s       <span class="term-risk term-risk-low">LOW</span>','Salesforce          289       <span class="term-success">✓ 201</span>    2.1s       <span class="term-risk term-risk-low">LOW</span>','Slack Enterprise    401       <span class="term-success">✓ 201</span>    0.8s       <span class="term-risk term-risk-low">LOW</span>','GitHub Enterprise   156       <span class="term-success">✓ 201</span>    1.4s       <span class="term-risk term-risk-med">MED</span>','ServiceNow          382       <span class="term-success">✓ 201</span>    1.9s       <span class="term-risk term-risk-low">LOW</span>','','<span class="term-success">✓</span> Sync complete | 1,575 users | 0 errors | Duration: 7.4s'],risk:'low',approval:'auto'},
+
+audit:{out:['<span class="term-dim">$</span> az monitor activity-log list --max-events 6 <span class="term-approval term-approval-auto">AUTO</span>','','<span class="term-out">Time        Event                           Actor                  Result</span>','<span class="term-out">─────────────────────────────────────────────────────────────────────────────</span>','<span class="term-timestamp">'+t()+'</span>  UserLoggedIn                    sarah.chen@contoso     <span class="term-success">Success</span>','<span class="term-timestamp">'+t()+'</span>  MFACompleted (FIDO2)            sarah.chen@contoso     <span class="term-success">Success</span>','<span class="term-timestamp">09:41:22</span>  RoleAssignmentCreated           system@azure           <span class="term-success">Success</span>','<span class="term-timestamp">09:38:17</span>  FailedSignIn (brute force)      unknown@external.com   <span class="term-error">Blocked</span>','<span class="term-timestamp">09:35:44</span>  PIMRoleActivated (User Admin)   admin@contoso.com      <span class="term-success">Success</span>','<span class="term-timestamp">09:22:08</span>  ConditionalAccessBlocked        d.kumar@contoso        <span class="term-warn">Blocked</span>','','<span class="term-dim">Logs forwarded to: Azure Sentinel | Retention: 90 days | Immutable: Yes</span>'],risk:'low',approval:'auto'},
+
+lifecycle:{out:['<span class="term-hl">JOINER → MOVER → LEAVER LIFECYCLE SIMULATION</span>','','<span class="term-system">[JOINER]</span> HR trigger: New employee detected','<span class="term-dim">├─</span> Source: Workday HRIS export','<span class="term-dim">├─</span> Employee: Elena Rodriguez (Engineering)','<span class="term-dim">├─</span> Start date: '+d(),'','<span class="term-success">✓</span> Identity created in Entra ID <span class="term-approval term-approval-auto">AUTO</span>','<span class="term-success">✓</span> UPN assigned: e.rodriguez@contoso.com','<span class="term-success">✓</span> Added to group: Engineering-Global','<span class="term-success">✓</span> SCIM provisioning triggered → 5 apps','<span class="term-success">✓</span> Welcome email queued','','───────────────────────────────────────────','','<span class="term-system">[MOVER]</span> HR trigger: Department transfer','<span class="term-dim">├─</span> Employee: James Wilson','<span class="term-dim">├─</span> From: Marketing → To: Sales','','<span class="term-success">✓</span> Group membership updated <span class="term-approval term-approval-auto">AUTO</span>','<span class="term-success">✓</span> Old entitlements: 12 → Revoked: 8','<span class="term-success">✓</span> New entitlements: 6 → Provisioned','<span class="term-warn">⚠</span> Manager approval pending for: Salesforce CRM','','───────────────────────────────────────────','','<span class="term-system">[LEAVER]</span> HR trigger: Termination <span class="term-approval term-approval-human">HUMAN</span>','<span class="term-dim">├─</span> Employee: David Kim','<span class="term-dim">├─</span> Type: Voluntary resignation','<span class="term-dim">├─</span> Last day: 2024-12-27','','<span class="term-success">✓</span> Account disabled in Entra ID','<span class="term-success">✓</span> Sessions revoked (4 active)','<span class="term-success">✓</span> SCIM deprovisioning: 8 apps','<span class="term-success">✓</span> Mailbox converted to shared','<span class="term-success">✓</span> Manager granted delegate access','<span class="term-dim">└─</span> Retention: 90 days before purge','','<span class="term-dim">Lifecycle events logged to: governance-audit | Compliance: SOX, ISO 27001</span>'],risk:'med',approval:'auto'},
+
+incident:{out:['<span class="term-hl">INCIDENT RESPONSE MODE</span> <span class="term-approval term-approval-human">HUMAN</span>','','<span class="term-error">⚠ SECURITY EVENT DETECTED</span>','<span class="term-out">Incident ID:</span> INC-2024-1247','<span class="term-out">Severity:</span> <span class="term-risk term-risk-high">HIGH</span>','<span class="term-out">Type:</span> Suspicious sign-in activity','<span class="term-out">User:</span> admin@contoso.com','<span class="term-out">Location:</span> Unusual geography (first sign-in from RU)','<span class="term-out">Risk Score:</span> 87/100','','<span class="term-system">[RESPONSE ACTIONS]</span>','','<span class="term-warn">Step 1:</span> Session revocation','<span class="term-dim">$</span> Revoke-MgUserSignInSession -UserId admin@contoso.com','<span class="term-success">✓</span> 3 active sessions terminated','','<span class="term-warn">Step 2:</span> Credential reset required','<span class="term-dim">$</span> Reset-MgUserPassword -UserId admin@contoso.com -ForceReset','<span class="term-success">✓</span> Password reset enforced on next sign-in','','<span class="term-warn">Step 3:</span> MFA re-registration','<span class="term-dim">$</span> Remove-MgUserAuthenticationMethod -All','<span class="term-success">✓</span> MFA methods cleared — re-enrollment required','','<span class="term-warn">Step 4:</span> Conditional Access block','<span class="term-success">✓</span> User added to CA block list (pending investigation)','','<span class="term-out">Incident status:</span> <span class="term-warn">CONTAINED</span> — Awaiting security review','<span class="term-dim">Timeline logged to: Azure Sentinel | Ticket: ServiceNow INC0012847</span>'],risk:'high',approval:'human'},
+
+'tf-plan':{out:['<span class="term-dim">$</span> terraform plan -var-file="prod.tfvars" <span class="term-approval term-approval-review">REVIEW</span>','','<span class="term-system">[Terraform]</span> Refreshing state... (12 resources)','','<span class="term-out">Terraform will perform the following actions:</span>','','  <span class="term-hl">#</span> azuread_group.security-admins will be <span class="term-warn">updated</span>','    ~ members = [','        <span class="term-success">+ "user-guid-12345"</span>  <span class="term-dim"># sarah.chen@contoso.com</span>','      ]','','  <span class="term-hl">#</span> aws_iam_policy.readonly-prod will be <span class="term-success">created</span>','    + arn = (known after apply)','','<span class="term-out">Plan: 1 to add, 1 to change, 0 to destroy.</span>','','<span class="term-warn">⚠</span> Changes require: PR approval + security review + change ticket','<span class="term-dim">Pipeline: GitHub Actions → Terraform Cloud → Manual gate → Apply</span>'],risk:'med',approval:'review'},
+
+whoami:{out:['<span class="term-dim">$</span> whoami && az account show','','<span class="term-user">andrew.symister</span>@iam-ops-workstation','','<span class="term-out">{</span>','    <span class="term-hl">"name"</span>: <span class="term-out">"Production-Identity"</span>,','    <span class="term-hl">"user"</span>: {','        <span class="term-hl">"name"</span>: <span class="term-success">"andrew.symister@contoso.com"</span>,','        <span class="term-hl">"type"</span>: <span class="term-out">"user"</span>','    },','    <span class="term-hl">"tenantId"</span>: <span class="term-out">"a8f4-****-****-************"</span>,','    <span class="term-hl">"environment"</span>: <span class="term-out">"Production"</span>','<span class="term-out">}</span>','','<span class="term-dim">Roles:</span> '+termState.role+(termState.elevated?' <span class="term-warn">⚡ELEVATED</span>':''),'<span class="term-dim">Auth:</span> SSO via Okta | MFA: FIDO2 | Device: Compliant','<span class="term-dim">Session:</span> '+termState.auditCount+' commands logged'],risk:'low',approval:'auto'}
+};
+
+function addTermLine(h){const el=document.createElement('div');el.className='term-line';el.innerHTML=h;tb.appendChild(el);tb.scrollTop=tb.scrollHeight}
+
+function processCmd(cmd){
+  const c=cmd.trim().toLowerCase();
+  if(c==='clear'){tb.innerHTML='';termState.auditCount=0;document.getElementById('auditCount').textContent='0';showStartup();return}
+  
+  termState.cmdHistory.push(cmd);
+  addTermLine('<span class="term-user">'+termState.identity.split('.')[0]+'</span>@<span class="term-path">iam-ops</span> <span class="term-dim">$</span> '+cmd);
+  
+  if(commands[c]){
+    const cmdData=commands[c];
+    cmdData.out.forEach((line,i)=>{
+      setTimeout(()=>{
+        addTermLine(line);
+        if(i===cmdData.out.length-1){
+          setTimeout(()=>{
+            addAuditEcho(c,cmdData.risk||'low');
+            if(cmdData.onRun)cmdData.onRun();
+            maybeShowWisdom();
+            addInputLine();
+          },100);
+        }
+      },i*35);
+    });
+  }else{
+    addTermLine('<span class="term-error">bash: '+cmd+': command not found</span>');
+    addTermLine('<span class="term-dim">Hint: type "help" for available IAM operations</span>');
+    setTimeout(addInputLine,150);
+  }
+}
+
+function addInputLine(){
+  const div=document.createElement('div');
+  div.className='term-input-line';
+  div.innerHTML='<span class="term-user">'+termState.identity.split('.')[0]+'</span>@<span class="term-path">iam-ops</span> <span class="term-dim">$</span> ';
+  const input=document.createElement('input');
+  input.type='text';
+  input.className='term-input';
+  input.autocomplete='off';
+  input.spellcheck=false;
+  input.onkeydown=e=>{if(e.key==='Enter'&&input.value.trim()){div.remove();processCmd(input.value)}};
+  div.appendChild(input);
+  tb.appendChild(div);
+  input.focus();
+  tb.scrollTop=tb.scrollHeight;
+}
+
+function showStartup(){
+  addTermLine('<span class="term-dim"># Establishing secure session...</span>');
+  setTimeout(()=>{addTermLine('<span class="term-success">✓</span> VPN tunnel established: corp-secure.contoso.com');},150);
+  setTimeout(()=>{addTermLine('<span class="term-success">✓</span> SSO authentication complete (Okta → Entra ID)');},300);
+  setTimeout(()=>{addTermLine('<span class="term-success">✓</span> MFA verified: FIDO2 security key');},450);
+  setTimeout(()=>{addTermLine('<span class="term-success">✓</span> Temporary credentials issued (TTL: 8h)');},600);
+  setTimeout(()=>{addTermLine('<span class="term-success">✓</span> Audit logging active → Azure Sentinel');},750);
+  setTimeout(()=>{addTermLine('');addTermLine('<span class="term-dim"># IAM runs quietly. Every action is logged. Type "help" to begin.</span>');addTermLine('');updateContext();updateTelemetry();addInputLine();},950);
+}
+showStartup();
+tb.onclick=()=>{const i=tb.querySelector('.term-input');if(i)i.focus()};
+
+// Project Filters
+document.querySelectorAll('.project-filter').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.project-filter').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter=btn.dataset.filter;
+    document.querySelectorAll('.project-card').forEach(card=>{
+      if(filter==='all'||card.dataset.category===filter){
+        card.style.display='flex';
+        setTimeout(()=>card.style.opacity='1',10);
+      }else{
+        card.style.opacity='0';
+        setTimeout(()=>card.style.display='none',200);
+      }
+    });
+  });
+});
+
+// Scroll Animations
+const fadeEls=document.querySelectorAll('.fade-in');
+const trajSteps=document.querySelectorAll('.traj-step');
+const labCards=document.querySelectorAll('.lab-card');
+const labFuture=document.querySelector('.lab-future');
+
+function checkAnimations(){
+fadeEls.forEach(el=>{if(el.getBoundingClientRect().top<window.innerHeight-80)el.classList.add('visible')});
+trajSteps.forEach((el,i)=>{if(el.getBoundingClientRect().top<window.innerHeight-50){setTimeout(()=>el.classList.add('visible'),i*150)}});
+labCards.forEach((el,i)=>{if(el.getBoundingClientRect().top<window.innerHeight-50){setTimeout(()=>el.classList.add('visible'),i*100)}});
+if(labFuture&&labFuture.getBoundingClientRect().top<window.innerHeight-50)labFuture.classList.add('visible');
+}
+checkAnimations();
+window.addEventListener('scroll',checkAnimations,{passive:true});
+
+// Skill Bars
+function animateBars(){document.querySelectorAll('.skill-progress').forEach(b=>{if(b.getBoundingClientRect().top<window.innerHeight&&!b.style.width){b.style.width=b.dataset.progress+'%'}})}
+animateBars();window.addEventListener('scroll',animateBars,{passive:true});
+
+// Mobile Nav
+const toggle=document.querySelector('.mobile-toggle'),navLinks=document.getElementById('navLinks');
+if(toggle)toggle.addEventListener('click',()=>navLinks.classList.toggle('active'));
+navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('active')));
+window.addEventListener('scroll',()=>document.querySelector('nav').classList.toggle('scrolled',scrollY>50),{passive:true});
+
+// Project Modal Data
+const projects={
+'conditional-access':{title:'Conditional Access & MFA',sub:'Zero Trust Authentication in Entra ID',body:`<div class="project-modal-section"><h4><i class="fas fa-bullseye"></i> Objective</h4><p>Implement risk-based Conditional Access policies in Microsoft Entra ID to enforce Zero Trust principles while maintaining user productivity.</p></div><div class="project-modal-section"><h4><i class="fas fa-cogs"></i> Implementation</h4><ul><li>Designed tiered CA policies based on user risk, sign-in risk, and device compliance</li><li>Configured break-glass accounts with monitoring and alerts</li><li>Implemented phishing-resistant MFA (FIDO2, Windows Hello)</li><li>Created named locations for trusted networks</li><li>Built emergency access procedures and runbooks</li></ul></div><div class="project-modal-section"><h4><i class="fas fa-code"></i> Sample Policy Logic</h4><div class="project-code"><pre><span class="comment"># Conditional Access Policy - High Risk Sign-ins</span>
+<span class="keyword">Policy:</span> CA-001-BlockHighRisk
+<span class="keyword">Users:</span> All Users (excl. Break-Glass)
+<span class="keyword">Apps:</span> All Cloud Apps
+<span class="keyword">Conditions:</span>
+  <span class="var">Sign-in Risk:</span> High
+  <span class="var">User Risk:</span> High
+<span class="keyword">Grant:</span> Block Access
+<span class="keyword">Session:</span> Sign-in frequency: Every time</pre></div></div><div class="project-modal-section"><h4><i class="fas fa-photo-video"></i> Evidence</h4><p style="color:var(--text3);font-size:0.9rem;margin-bottom:1rem;">Lab implementation screenshots</p><div class="evidence-grid"><div class="project-evidence-item"><img src="images/evidence/ca-policy-overview.png" alt="Conditional Access Policies"><div class="evidence-caption">CA policy dashboard showing tiered policies</div></div><div class="project-evidence-item"><img src="images/evidence/ca-mfa-registration.png" alt="MFA Registration"><div class="evidence-caption">FIDO2 security key registration flow</div></div></div></div><div class="project-modal-section"><h4><i class="fas fa-tools"></i> Technologies</h4><div class="project-tech"><span>Entra ID</span><span>Conditional Access</span><span>MFA</span><span>FIDO2</span><span>Identity Protection</span></div></div>`},
+'okta-sso':{title:'Okta Workforce SSO',sub:'Enterprise Single Sign-On & Provisioning',body:`<div class="project-modal-section"><h4><i class="fas fa-bullseye"></i> Objective</h4><p>Implement enterprise SSO with automated user provisioning using Okta as the central identity provider for SaaS applications.</p></div><div class="project-modal-section"><h4><i class="fas fa-cogs"></i> Implementation</h4><ul><li>Configured SAML 2.0 and OIDC integrations for 15+ applications</li><li>Implemented SCIM provisioning for automated user lifecycle</li><li>Built Okta Workflows for custom JML automation</li><li>Designed group-based application assignment rules</li><li>Created self-service app request portal</li></ul></div><div class="project-modal-section"><h4><i class="fas fa-code"></i> SCIM Provisioning Example</h4><div class="project-code"><pre><span class="comment"># SCIM User Creation Request</span>
+<span class="keyword">POST</span> /scim/v2/Users
+<span class="keyword">Content-Type:</span> application/scim+json
+
+{
+  <span class="string">"schemas"</span>: [<span class="string">"urn:ietf:params:scim:schemas:core:2.0:User"</span>],
+  <span class="string">"userName"</span>: <span class="string">"sarah.chen@company.com"</span>,
+  <span class="string">"name"</span>: {
+    <span class="string">"givenName"</span>: <span class="string">"Sarah"</span>,
+    <span class="string">"familyName"</span>: <span class="string">"Chen"</span>
+  },
+  <span class="string">"emails"</span>: [{<span class="string">"value"</span>: <span class="string">"sarah.chen@company.com"</span>}],
+  <span class="string">"active"</span>: <span class="var">true</span>
+}</pre></div></div><div class="project-modal-section"><h4><i class="fas fa-photo-video"></i> Evidence</h4><p style="color:var(--text3);font-size:0.9rem;margin-bottom:1rem;">SSO configuration walkthrough</p><div class="project-evidence-item"><video controls poster="images/evidence/okta-sso-thumb.png"><source src="images/evidence/okta-sso-demo.mp4" type="video/mp4">Your browser does not support video.</video><div class="evidence-caption">SAML app integration and SCIM provisioning demo</div></div></div><div class="project-modal-section"><h4><i class="fas fa-tools"></i> Technologies</h4><div class="project-tech"><span>Okta</span><span>SAML 2.0</span><span>OIDC</span><span>SCIM</span><span>Okta Workflows</span></div></div>`},
+'cyberark-pam':{title:'Privileged Identity Security',sub:'PAM Architecture & Session Management',body:`<div class="project-modal-section"><h4><i class="fas fa-bullseye"></i> Objective</h4><p>Design and implement privileged access management controls to secure administrative credentials and monitor privileged sessions.</p></div><div class="project-modal-section"><h4><i class="fas fa-cogs"></i> Implementation</h4><ul><li>Architected vault structure with safe hierarchies by environment</li><li>Implemented credential rotation policies (30/60/90 day cycles)</li><li>Configured PSM for session recording and keystroke logging</li><li>Built just-in-time access workflows with approval gates</li><li>Integrated with SIEM for privileged activity monitoring</li></ul></div><div class="project-modal-section"><h4><i class="fas fa-code"></i> Safe Architecture</h4><div class="project-code"><pre><span class="comment"># CyberArk Safe Structure</span>
+<span class="keyword">Vault:</span> Production
+├── <span class="var">Safe:</span> Windows-Servers-Prod
+│   ├── Domain Admins
+│   └── Local Admins
+├── <span class="var">Safe:</span> Linux-Servers-Prod
+│   ├── Root Accounts
+│   └── Service Accounts
+├── <span class="var">Safe:</span> Database-Prod
+│   ├── DBA Accounts
+│   └── App Service Accounts
+└── <span class="var">Safe:</span> Cloud-Admin-Prod
+    ├── AWS Root
+    └── Azure Global Admin</pre></div></div><div class="project-modal-section"><h4><i class="fas fa-photo-video"></i> Evidence</h4><p style="color:var(--text3);font-size:0.9rem;margin-bottom:1rem;">Vault architecture and session management</p><div class="evidence-grid"><div class="project-evidence-item"><img src="images/evidence/pam-vault-structure.png" alt="Vault Structure"><div class="evidence-caption">Safe hierarchy and access controls</div></div><div class="project-evidence-item"><img src="images/evidence/pam-session-recording.png" alt="Session Recording"><div class="evidence-caption">PSM session monitoring interface</div></div></div></div><div class="project-modal-section"><h4><i class="fas fa-tools"></i> Technologies</h4><div class="project-tech"><span>CyberArk</span><span>PAM</span><span>PSM</span><span>Vault</span><span>JIT Access</span></div></div>`},
+'iam-dashboard':{title:'IAM Reporting Dashboard',sub:'Identity Analytics & Compliance Visibility',body:`<div class="project-modal-section"><h4><i class="fas fa-bullseye"></i> Objective</h4><p>Build a PowerShell-driven dashboard for real-time identity metrics, risk indicators, and audit compliance reporting.</p></div><div class="project-modal-section"><h4><i class="fas fa-cogs"></i> Implementation</h4><ul><li>Developed PowerShell scripts to aggregate data from Entra ID, Okta, and AD</li><li>Built HTML/CSS dashboard with Chart.js visualizations</li><li>Created automated daily report generation and email distribution</li><li>Implemented risk scoring algorithm for stale accounts and excessive permissions</li><li>Designed SOX compliance checklist automation</li></ul></div><div class="project-modal-section"><h4><i class="fas fa-code"></i> Data Collection Script</h4><div class="project-code"><pre><span class="comment"># IAM Metrics Collection</span>
+<span class="keyword">$metrics</span> = @{
+    <span class="var">TotalUsers</span> = (Get-MgUser -All).Count
+    <span class="var">MFAEnabled</span> = (Get-MgUser -All | Where MFAStatus -eq <span class="string">"Enabled"</span>).Count
+    <span class="var">StaleAccounts</span> = (Get-MgUser -All | Where {
+        $_.SignInActivity.LastSignInDateTime -lt (Get-Date).AddDays(-90)
+    }).Count
+    <span class="var">PrivilegedUsers</span> = (Get-MgDirectoryRoleMember -All).Count
+}
+
+<span class="keyword">Export-IAMDashboard</span> -Metrics <span class="keyword">$metrics</span> -Output <span class="string">"./dashboard.html"</span></pre></div></div><div class="project-modal-section"><h4><i class="fas fa-photo-video"></i> Evidence</h4><p style="color:var(--text3);font-size:0.9rem;margin-bottom:1rem;">Dashboard output and metrics visualization</p><div class="project-evidence-item"><img src="images/evidence/iam-dashboard-overview.png" alt="IAM Dashboard"><div class="evidence-caption">Real-time identity metrics and compliance status</div></div></div><div class="project-modal-section"><h4><i class="fas fa-tools"></i> Technologies</h4><div class="project-tech"><span>PowerShell</span><span>Microsoft Graph</span><span>Chart.js</span><span>HTML/CSS</span><span>Scheduled Tasks</span></div></div>`},
+'ping-federation':{title:'PingFederate Federation Broker',sub:'Multi-IdP Federation & Secure SSO Lab',body:`<div class="project-modal-section"><h4><i class="fas fa-bullseye"></i> Objective</h4><p>Configure PingFederate as a central federation broker connecting multiple identity providers to downstream applications in a hands-on lab environment.</p></div><div class="project-modal-section"><h4><i class="fas fa-sitemap"></i> Architecture</h4><p>Lab topology connecting Entra ID and Okta as upstream IdPs, with PingFederate brokering authentication to a sample SaaS application via SAML 2.0.</p><div class="project-code"><pre><span class="comment"># Federation Flow</span>
+<span class="var">User</span> → <span class="keyword">SP</span> (SaaS App)
+         ↓
+    <span class="keyword">PingFederate</span> (Broker)
+         ↓
+   ┌─────┴─────┐
+<span class="var">Entra ID</span>    <span class="var">Okta</span>
+  (IdP)      (IdP)</pre></div></div><div class="project-modal-section"><h4><i class="fas fa-cogs"></i> Implementation</h4><ul><li>Configured SP and IdP connections with signed SAML assertions</li><li>Established metadata exchange between all federation partners</li><li>Mapped attributes from source IdPs to SP requirements</li><li>Enforced MFA via Conditional Access before federation handoff</li><li>Set token lifetime to 5 minutes with audience validation</li><li>Enabled assertion encryption for sensitive attribute claims</li></ul></div><div class="project-modal-section"><h4><i class="fas fa-shield-alt"></i> Security Controls</h4><ul><li><strong>Assertion signing:</strong> RSA-SHA256 with certificate rotation schedule</li><li><strong>Audience restriction:</strong> Prevents assertion replay to unintended SPs</li><li><strong>Short token lifetime:</strong> 5-minute window reduces replay risk</li><li><strong>Attribute filtering:</strong> Least-privilege claim mapping</li><li><strong>MFA enforcement:</strong> Step-up authentication for sensitive apps</li></ul></div><div class="project-modal-section"><h4><i class="fas fa-exclamation-triangle"></i> Risks Mitigated</h4><ul><li>Unsigned SAML response → Mandatory signing enforced</li><li>Assertion replay → Nonce + short lifetime + audience validation</li><li>Over-permission via attributes → Role-based filtering at broker</li><li>Session fixation → Fresh session on each federation</li><li>Incomplete deprovisioning → SCIM sync from authoritative source</li></ul></div><div class="project-modal-section"><h4><i class="fas fa-clipboard-check"></i> Compliance Relevance</h4><p>Federation audit logs provide traceability for SOX and ISO 27001. Each assertion includes correlation IDs linking user, source IdP, destination SP, and timestamp for incident investigation.</p></div><div class="project-modal-section"><h4><i class="fas fa-photo-video"></i> Evidence</h4><p style="color:var(--text3);font-size:0.9rem;margin-bottom:1rem;">Federation configuration and SAML flow</p><div class="evidence-grid"><div class="project-evidence-item"><img src="images/evidence/ping-idp-config.png" alt="IdP Configuration"><div class="evidence-caption">PingFederate IdP adapter settings</div></div><div class="project-evidence-item"><img src="images/evidence/ping-saml-trace.png" alt="SAML Trace"><div class="evidence-caption">SAML assertion flow between IdPs</div></div></div></div><div class="project-modal-section"><h4><i class="fas fa-tools"></i> Technologies</h4><div class="project-tech"><span>PingFederate</span><span>SAML 2.0</span><span>Entra ID</span><span>Okta</span><span>Federation</span></div></div>`},
+'risk-analytics':{title:'Identity Risk Analytics Lab',sub:'Dormant Identity & Orphaned Access Detection',body:`<div class="project-modal-section"><h4><i class="fas fa-bullseye"></i> Purpose</h4><p>A governance-aligned lab for detecting identity risk signals that accumulate silently over time — dormant accounts, orphaned entitlements, and lifecycle gaps that create audit findings and security exposure.</p><p style="margin-top:0.75rem;color:var(--text3);font-size:0.9rem;font-style:italic;">"IAM runs quietly in the background, but it carries the weight of the system. This lab surfaces the risks that hide in that quiet."</p></div><div class="project-modal-section"><h4><i class="fas fa-search"></i> Risk Signals Detected</h4><div class="project-code"><pre><span class="term-hl">IDENTITY RISK SIGNALS</span>
+
+<span class="term-error">●</span> <span class="var">Dormant Identities</span>
+   Users enabled but inactive 90+ days
+   
+<span class="term-error">●</span> <span class="var">Orphaned Entitlements</span>  
+   Terminated users still holding SaaS access
+   
+<span class="term-warn">●</span> <span class="var">Privileged Roles Unused</span>
+   Admin roles with no sign-in activity 60+ days
+   
+<span class="term-warn">●</span> <span class="var">Break-Glass Without MFA</span>
+   Emergency accounts missing phishing-resistant auth
+   
+<span class="term-warn">●</span> <span class="var">Service Account Anomalies</span>
+   Non-human accounts used interactively
+   
+<span class="term-out">●</span> <span class="var">Lifecycle Exclusions</span>
+   Accounts outside JML automation scope</pre></div></div><div class="project-modal-section"><h4><i class="fas fa-sitemap"></i> Detection Architecture</h4><p>Cross-reference identity state across authoritative sources to surface discrepancies:</p><div class="project-code"><pre><span class="comment"># Data Correlation Flow</span>
+<span class="var">HR System</span> (Workday)     → Employee status
+        ↓
+<span class="keyword">Identity Provider</span>       → Account state  
+  (Entra ID / Okta)         (enabled/disabled)
+        ↓
+<span class="var">Downstream Apps</span>         → Entitlement state
+  (SaaS via SCIM)           (provisioned/active)
+        ↓
+<span class="keyword">Risk Analysis</span>           → Discrepancy detection</pre></div><p style="margin-top:0.75rem;font-size:0.9rem;color:var(--text2);">Lab uses simulated data exports to demonstrate correlation logic. Production implementations would integrate via API or scheduled sync.</p></div><div class="project-modal-section"><h4><i class="fas fa-code"></i> Sample Detection Query</h4><div class="project-code"><pre><span class="comment"># Detect dormant privileged accounts</span>
+<span class="keyword">$dormantAdmins</span> = Get-MgDirectoryRoleMember -All | 
+    Where-Object {
+        <span class="keyword">$_</span>.SignInActivity.LastSignInDateTime -lt 
+            (Get-Date).AddDays(-60)
+    } | Select-Object DisplayName, UserPrincipalName,
+        @{N=<span class="string">'DaysSinceLogin'</span>;E={
+            ((Get-Date) - <span class="keyword">$_</span>.SignInActivity.LastSignInDateTime).Days
+        }}
+
+<span class="comment"># Flag for access review</span>
+<span class="keyword">$dormantAdmins</span> | Export-Csv <span class="string">"./DormantPrivileged.csv"</span></pre></div></div><div class="project-modal-section"><h4><i class="fas fa-balance-scale"></i> Governance Alignment</h4><ul><li><strong>SOX Controls:</strong> Supports IT General Controls for access review evidence</li><li><strong>Least Privilege:</strong> Identifies over-provisioned and stale entitlements</li><li><strong>JML Enforcement:</strong> Validates lifecycle automation completeness</li><li><strong>Break-Glass Discipline:</strong> Ensures emergency accounts remain secured</li><li><strong>Audit Readiness:</strong> Pre-surfaces findings before external review</li></ul></div><div class="project-modal-section"><h4><i class="fas fa-exclamation-circle"></i> Known Limitations</h4><p style="color:var(--text2);font-size:0.9rem;">Transparent about constraints — this is a lab, not a production IGA platform:</p><ul style="margin-top:0.75rem;"><li>HR export lag may cause false positives for recent terminations</li><li>Service account activity patterns require manual exception review</li><li>Not all SaaS apps expose complete activity logs via SCIM</li><li>Activity presence ≠ business justification — human review still required</li><li>Point-in-time analysis; continuous monitoring requires scheduled jobs</li></ul></div><div class="project-modal-section"><h4><i class="fas fa-photo-video"></i> Evidence</h4><p style="color:var(--text3);font-size:0.9rem;margin-bottom:1rem;">Risk detection output and analysis</p><div class="project-evidence-item"><video controls poster="images/evidence/risk-analytics-thumb.png"><source src="images/evidence/risk-analytics-demo.mp4" type="video/mp4">Your browser does not support video.</video><div class="evidence-caption">Dormant account detection and risk signal walkthrough</div></div></div><div class="project-modal-section"><h4><i class="fas fa-tools"></i> Technologies</h4><div class="project-tech"><span>PowerShell</span><span>Microsoft Graph</span><span>IGA</span><span>Risk Analytics</span><span>Governance</span></div></div>`}
+};
+
+function openProjectModal(id){const p=projects[id];if(!p)return;document.getElementById('pmTitle').textContent=p.title;document.getElementById('pmSub').textContent=p.sub;document.getElementById('pmBody').innerHTML=p.body;document.getElementById('projectModal').classList.add('active');document.body.style.overflow='hidden'}
+function closeProjectModal(){document.getElementById('projectModal').classList.remove('active');document.body.style.overflow=''}
+document.getElementById('projectModal').addEventListener('click',e=>{if(e.target.id==='projectModal')closeProjectModal()});
+
+// Resume & Contact Modals
+let activeModal=null;
+function openResumeModal(){document.getElementById('resumeModal').classList.add('active');document.body.style.overflow='hidden';activeModal='resumeModal'}
+function closeResumeModal(){document.getElementById('resumeModal').classList.remove('active');document.body.style.overflow='';activeModal=null;const f=document.getElementById('resumeForm'),s=document.getElementById('resumeSuccess');f.reset();f.classList.remove('hidden');s.classList.remove('active')}
+function openContactModal(){document.getElementById('contactModal').classList.add('active');document.body.style.overflow='hidden';activeModal='contactModal'}
+function closeContactModal(){document.getElementById('contactModal').classList.remove('active');document.body.style.overflow='';activeModal=null;const f=document.getElementById('contactForm'),s=document.getElementById('contactSuccess');f.reset();f.classList.remove('hidden');s.classList.remove('active')}
+
+document.querySelectorAll('.modal-form').forEach(form=>{
+form.addEventListener('submit',async e=>{
+e.preventDefault();let valid=true;
+form.querySelectorAll('[required]').forEach(inp=>{const g=inp.closest('.form-group');if(!inp.value.trim()||(inp.type==='email'&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inp.value))){g.classList.add('error');valid=false}else{g.classList.remove('error')}});
+if(!valid)return;
+const btn=form.querySelector('.btn-submit');btn.classList.add('loading');btn.disabled=true;
+try{const res=await fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}});if(res.ok){form.classList.add('hidden');document.getElementById(form.id.replace('Form','Success')).classList.add('active')}else{throw new Error()}}
+catch(err){alert('Error. Please email asymister@gmail.com directly.')}
+finally{btn.classList.remove('loading');btn.disabled=false}
+});
+form.querySelectorAll('input,textarea').forEach(i=>i.addEventListener('input',()=>i.closest('.form-group').classList.remove('error')));
+});
+
+document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o){if(o.id==='resumeModal')closeResumeModal();if(o.id==='contactModal')closeContactModal()}}));
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(activeModal==='resumeModal')closeResumeModal();else if(activeModal==='contactModal')closeContactModal();else if(document.getElementById('projectModal').classList.contains('active'))closeProjectModal()}});
+</script>
+</body>
+</html>

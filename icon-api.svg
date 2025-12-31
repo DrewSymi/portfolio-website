@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg"  width="572" height="256" viewBox="0 0 572 256">
+<g stroke="#000" stroke-width="2" fill="#000" font-family="Verdana" font-size="16">
+  <path d="M57,51h155v115h-155zm0,38h155m0,38h-155" fill="#cfe2f3"/>
+  <text stroke="none">
+    <tspan x="70" y="76">client-side code</tspan>
+    <tspan dx="-80" dy="38">API</tspan>
+    <tspan dx="-54" dy="38">browser</tspan>
+  </text>
+  <path d="M215,70 l10-5c-5,4-5,6 0,10zm114,5 c5-4 5-6 0-10l10,5z" stroke-width="0"/>
+  <path d="M228,70h100" stroke-dasharray="0, 7" stroke-linecap="round"/>
+  <path d="M342,51h155v115h-155zm0,38h155m0,38h-155" fill="#cfe2f3"/>
+  <text stroke="none">
+    <tspan x="350" y="76">server-side code</tspan>
+    <tspan dx="-80" dy="38">API</tspan>
+    <tspan dx="-60" dy="40">Web server</tspan>
+  </text>
+  <text x="188" y="195" stroke="none">physical connection</text>
+  <path d="M134,166v38h285v-38" fill="none"/>
+</g>
+</svg>

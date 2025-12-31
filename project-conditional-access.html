@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conditional Access & MFA Policy Implementation | Andrew Symister</title>
+    <meta name="description" content="Lab project: Entra ID Conditional Access policies with risk-based MFA, break-glass accounts, and governance documentation.">
+    <link rel="icon" type="image/jpeg" href="images/my-photo.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root{--bg-primary:#0a0e14;--bg-secondary:#0f1419;--bg-card:#151b23;--bg-glass:rgba(21,27,35,0.7);--text-primary:#e6edf3;--text-secondary:#8b949e;--text-muted:#6e7681;--accent:#58a6ff;--accent-green:#3fb950;--accent-yellow:#d29922;--accent-cyan:#00d4ff;--border:#21262d;--glow:0 0 20px rgba(88,166,255,0.3);--transition:0.3s cubic-bezier(0.4,0,0.2,1)}
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        html{scroll-behavior:smooth}
+        body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg-primary);color:var(--text-primary);line-height:1.7}
+        .grid-bg{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.02;background-image:linear-gradient(var(--accent) 1px,transparent 1px),linear-gradient(90deg,var(--accent) 1px,transparent 1px);background-size:50px 50px}
+        :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+        nav{position:fixed;top:0;width:100%;z-index:1000;padding:1rem 5%;background:rgba(10,14,20,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+        .nav-container{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+        .back-link,.nav-contact{color:var(--text-secondary);text-decoration:none;font-size:0.9rem;display:flex;align-items:center;gap:0.5rem;transition:all var(--transition)}
+        .back-link:hover,.nav-contact:hover{color:var(--accent)}
+        .hero{padding:8rem 5% 4rem;background:var(--bg-secondary);position:relative;overflow:hidden}
+        .container{max-width:900px;margin:0 auto;position:relative;z-index:1}
+        .badge{display:inline-flex;align-items:center;gap:0.4rem;padding:0.4rem 0.75rem;border-radius:6px;font-size:0.75rem;font-weight:600;text-transform:uppercase;background:rgba(210,153,34,0.15);color:var(--accent-yellow);border:1px solid rgba(210,153,34,0.3);margin-bottom:1rem}
+        h1{font-size:2.25rem;font-weight:800;margin-bottom:1rem;line-height:1.2}
+        .subtitle{color:var(--text-secondary);font-size:1.1rem;margin-bottom:2rem;max-width:700px}
+        .tags{display:flex;flex-wrap:wrap;gap:0.5rem}
+        .tag{padding:0.4rem 0.75rem;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;font-size:0.8rem;color:var(--text-secondary);transition:all var(--transition)}
+        .tag:hover{border-color:var(--accent);color:var(--text-primary)}
+        section{padding:3rem 5%;position:relative;z-index:1}
+        section:nth-child(even){background:var(--bg-secondary)}
+        .section-title{font-size:1.5rem;font-weight:700;margin-bottom:1.5rem;display:flex;align-items:center;gap:0.75rem}
+        .section-title i{color:var(--accent)}
+        .content p{color:var(--text-secondary);margin-bottom:1.25rem;line-height:1.8}
+        .content ul{color:var(--text-secondary);margin-left:1.5rem;margin-bottom:1.25rem}
+        .content li{margin-bottom:0.5rem}
+        .card{background:var(--bg-glass);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:12px;padding:1.5rem;transition:all var(--transition)}
+        .card:hover{border-color:var(--accent);box-shadow:var(--glow)}
+        .highlight-box{background:rgba(88,166,255,0.1);border:1px solid rgba(88,166,255,0.2);border-radius:8px;padding:1.25rem;margin:1.5rem 0}
+        .highlight-box h4{color:var(--accent);font-size:0.9rem;margin-bottom:0.5rem;display:flex;align-items:center;gap:0.5rem}
+        .highlight-box p{color:var(--text-secondary);margin:0}
+        .warning-box{background:rgba(210,153,34,0.1);border:1px solid rgba(210,153,34,0.3);border-radius:8px;padding:1.25rem;margin:1.5rem 0}
+        .warning-box h4{color:var(--accent-yellow);font-size:0.9rem;margin-bottom:0.5rem;display:flex;align-items:center;gap:0.5rem}
+        .warning-box p{color:var(--text-secondary);margin:0}
+        .policy-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin:1.5rem 0}
+        .policy-card{padding:1.25rem}
+        .policy-card h4{font-size:1rem;margin-bottom:0.75rem;color:var(--text-primary);display:flex;align-items:center;gap:0.5rem}
+        .policy-card h4 i{color:var(--accent)}
+        .policy-card p{font-size:0.85rem;color:var(--text-muted);margin:0}
+        .policy-card ul{font-size:0.85rem;color:var(--text-secondary);margin:0.5rem 0 0 1rem}
+        .policy-card li{margin-bottom:0.25rem}
+        .workflow-box{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin:1.5rem 0}
+        .workflow-title{font-size:1rem;font-weight:600;margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem}
+        .workflow-title i{color:var(--accent-green)}
+        .workflow-steps{display:flex;flex-direction:column;gap:1rem}
+        .workflow-step{display:flex;align-items:center;gap:1rem;padding:0.75rem;background:var(--bg-secondary);border-radius:8px}
+        .step-number{width:32px;height:32px;background:linear-gradient(135deg,var(--accent),var(--accent-cyan));border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;color:var(--bg-primary);flex-shrink:0}
+        .step-content strong{color:var(--text-primary);display:block;margin-bottom:0.15rem}
+        .step-content span{color:var(--text-muted);font-size:0.85rem}
+        .screenshot-placeholder{background:var(--bg-card);border:2px dashed var(--border);border-radius:12px;padding:4rem 2rem;text-align:center;margin:1.5rem 0}
+        .screenshot-placeholder i{font-size:2.5rem;color:var(--text-muted);margin-bottom:0.75rem;display:block}
+        .screenshot-placeholder p{color:var(--text-muted);font-size:0.9rem}
+        .video-section{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:2.5rem;text-align:center;margin:2rem 0}
+        .video-section i{font-size:3rem;color:var(--accent);margin-bottom:1rem;display:block}
+        .video-section h4{margin-bottom:0.5rem}
+        .video-section p{color:var(--text-muted);font-size:0.9rem}
+        .cta-section{text-align:center;padding:4rem 5%}
+        .btn{padding:0.875rem 1.5rem;border-radius:8px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;background:linear-gradient(135deg,var(--accent),#4a90d9);color:var(--bg-primary);transition:all var(--transition)}
+        .btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(88,166,255,0.3)}
+        footer{padding:2rem 5%;text-align:center;border-top:1px solid var(--border);color:var(--text-muted);font-size:0.85rem;position:relative;z-index:1}
+        .fade-in{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease}
+        .fade-in.visible{opacity:1;transform:translateY(0)}
+        @media(max-width:768px){h1{font-size:1.75rem}.section-title{font-size:1.25rem}section{padding:2rem 5%}.policy-grid{grid-template-columns:1fr}}
+        @media(prefers-reduced-motion:reduce){.fade-in{opacity:1;transform:none}}
+    </style>
+</head>
+<body>
+    <div class="grid-bg" aria-hidden="true"></div>
+    <nav aria-label="Project navigation">
+        <div class="nav-container">
+            <a href="index.html" class="back-link"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back to Portfolio</a>
+            <a href="/cdn-cgi/l/email-protection#9dfceee4f0f4eee9f8efddfaf0fcf4f1b3fef2f0" class="nav-contact"><i class="fas fa-paper-plane" aria-hidden="true"></i> Contact</a>
+        </div>
+    </nav>
+    <main>
+        <header class="hero">
+            <div class="container">
+                <span class="badge"><i class="fas fa-flask" aria-hidden="true"></i> Lab Project</span>
+                <h1>Conditional Access & MFA Policy Implementation</h1>
+                <p class="subtitle">Risk-based authentication policies in Entra ID with break-glass accounts, exception handling, and governance documentation.</p>
+                <div class="tags" role="list" aria-label="Technologies used">
+                    <span class="tag" role="listitem">Entra ID</span>
+                    <span class="tag" role="listitem">Conditional Access</span>
+                    <span class="tag" role="listitem">MFA</span>
+                    <span class="tag" role="listitem">Risk-Based Auth</span>
+                    <span class="tag" role="listitem">Governance</span>
+                </div>
+            </div>
+        </header>
+
+        <section aria-labelledby="problem-heading">
+            <div class="container">
+                <h2 class="section-title fade-in" id="problem-heading"><i class="fas fa-question-circle" aria-hidden="true"></i> Problem Statement</h2>
+                <div class="content fade-in">
+                    <p>Organizations struggle to balance security and usability in authentication. Too strict, and productivity suffers. Too loose, and you're one phishing email away from a breach. The challenge is implementing policies that adapt to risk while maintaining operational continuity.</p>
+                    <p>This project demonstrates how to design Conditional Access policies that provide strong protection without breaking legitimate workflows — including handling exceptions, break-glass scenarios, and governance requirements.</p>
+                </div>
+            </div>
+        </section>
+
+        <section aria-labelledby="why-heading">
+            <div class="container">
+                <h2 class="section-title fade-in" id="why-heading"><i class="fas fa-lightbulb" aria-hidden="true"></i> Why This Matters in IAM</h2>
+                <div class="content fade-in">
+                    <p>Conditional Access is the enforcement point for Zero Trust in Microsoft environments. It answers the question: "Given what I know about this user, device, and context, should I allow, block, or require additional verification?"</p>
+                    <ul>
+                        <li><strong>Risk Reduction:</strong> Block or challenge suspicious sign-ins before damage occurs</li>
+                        <li><strong>Compliance:</strong> Enforce MFA requirements mandated by SOX, PCI, HIPAA</li>
+                        <li><strong>User Experience:</strong> Reduce friction for low-risk, compliant users</li>
+                        <li><strong>Audit Trail:</strong> Every policy decision is logged for investigation</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section aria-labelledby="architecture-heading">
+            <div class="container">
+                <h2 class="section-title fade-in" id="architecture-heading"><i class="fas fa-sitemap" aria-hidden="true"></i> Policy Architecture</h2>
+                <div class="policy-grid fade-in" role="list" aria-label="Policy types">
+                    <article class="card policy-card" role="listitem">
+                        <h4><i class="fas fa-shield-halved" aria-hidden="true"></i> Baseline MFA</h4>
+                        <p>Require MFA for all users accessing cloud apps from any location.</p>
+                        <ul>
+                            <li>Target: All users</li>
+                            <li>Condition: All cloud apps</li>
+                            <li>Control: Require MFA</li>
+                        </ul>
+                    </article>
+                    <article class="card policy-card" role="listitem">
+                        <h4><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Location-Based</h4>
+                        <p>Block sign-ins from high-risk countries; trust corporate network locations.</p>
+                        <ul>
+                            <li>Named locations configured</li>
+                            <li>Block: Sanctioned countries</li>
+                            <li>Trust: Corporate IPs</li>
+                        </ul>
+                    </article>
+                    <article class="card policy-card" role="listitem">
+                        <h4><i class="fas fa-laptop" aria-hidden="true"></i> Device Compliance</h4>
+                        <p>Require compliant or hybrid-joined devices for sensitive apps.</p>
+                        <ul>
+                            <li>Intune compliance required</li>
+                            <li>Target: Finance apps</li>
+                            <li>Control: Compliant device</li>
+                        </ul>
+                    </article>
+                    <article class="card policy-card" role="listitem">
+                        <h4><i class="fas fa-exclamation-triangle" aria-hidden="true"></i> Risk-Based</h4>
+                        <p>Respond to Microsoft's sign-in and user risk signals dynamically.</p>
+                        <ul>
+                            <li>High risk: Block access</li>
+                            <li>Medium risk: Require MFA</li>
+                            <li>Password change on user risk</li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section aria-labelledby="breakglass-heading">
+            <div class="container">
+                <h2 class="section-title fade-in" id="breakglass-heading"><i class="fas fa-key" aria-hidden="true"></i> Break-Glass Accounts</h2>
+                <div class="content fade-in">
+                    <p>Emergency access accounts are critical when Conditional Access or MFA fails. Without them, you could lock yourself out of your own tenant.</p>
+                </div>
+                <div class="warning-box fade-in">
+                    <h4><i class="fas fa-exclamation-triangle" aria-hidden="true"></i> Break-Glass Requirements</h4>
+                    <p>Cloud-only accounts excluded from all Conditional Access policies. Long, complex passwords stored securely offline. Usage triggers immediate alerts. Regular testing required.</p>
+                </div>
+                <div class="workflow-box fade-in">
+                    <div class="workflow-title"><i class="fas fa-list-check" aria-hidden="true"></i> Break-Glass Procedure</div>
+                    <div class="workflow-steps" role="list" aria-label="Break-glass steps">
+                        <div class="workflow-step" role="listitem"><div class="step-number">1</div><div class="step-content"><strong>Confirm Emergency</strong><span>Verify normal admin access is blocked</span></div></div>
+                        <div class="workflow-step" role="listitem"><div class="step-number">2</div><div class="step-content"><strong>Retrieve Credentials</strong><span>Access offline-stored password from secure location</span></div></div>
+                        <div class="workflow-step" role="listitem"><div class="step-number">3</div><div class="step-content"><strong>Authenticate</strong><span>Sign in, acknowledge alert triggered</span></div></div>
+                        <div class="workflow-step" role="listitem"><div class="step-number">4</div><div class="step-content"><strong>Resolve & Document</strong><span>Fix issue, rotate credentials, document incident</span></div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section aria-labelledby="governance-heading">
+            <div class="container">
+                <h2 class="section-title fade-in" id="governance-heading"><i class="fas fa-file-contract" aria-hidden="true"></i> Governance & Exceptions</h2>
+                <div class="content fade-in">
+                    <p>Policies without governance become security theater. Every exception needs documentation, justification, and expiration.</p>
+                    <ul>
+                        <li><strong>Exception Request Process:</strong> Documented approval workflow with business justification</li>
+                        <li><strong>Time-Bound Exclusions:</strong> All exceptions expire after 90 days maximum</li>
+                        <li><strong>Compensating Controls:</strong> If MFA is waived, what replaces it?</li>
+                        <li><strong>Regular Review:</strong> Monthly audit of active exceptions</li>
+                        <li><strong>Audit Trail:</strong> All policy changes logged with who/what/when</li>
+                    </ul>
+                </div>
+                <div class="screenshot-placeholder fade-in">
+                    <i class="fas fa-image" aria-hidden="true"></i>
+                    <p>Screenshot: Conditional Access Policy Dashboard</p>
+                </div>
+            </div>
+        </section>
+
+        <section aria-labelledby="risk-heading">
+            <div class="container">
+                <h2 class="section-title fade-in" id="risk-heading"><i class="fas fa-shield-virus" aria-hidden="true"></i> Risk Considerations</h2>
+                <div class="content fade-in">
+                    <ul>
+                        <li><strong>Policy Conflicts:</strong> Multiple overlapping policies can cause unexpected blocks</li>
+                        <li><strong>Legacy Authentication:</strong> Older protocols bypass Conditional Access — block them</li>
+                        <li><strong>Service Accounts:</strong> Non-human identities need different handling</li>
+                        <li><strong>Testing:</strong> Always use Report-Only mode before enforcing</li>
+                        <li><strong>Rollback Plan:</strong> Know how to quickly disable a policy if it breaks production</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section aria-labelledby="learnings-heading">
+            <div class="container">
+                <h2 class="section-title fade-in" id="learnings-heading"><i class="fas fa-graduation-cap" aria-hidden="true"></i> Lessons Learned</h2>
+                <div class="content fade-in">
+                    <ul>
+                        <li>Start with Report-Only mode — never deploy blind</li>
+                        <li>Named locations simplify policy management significantly</li>
+                        <li>Break-glass accounts are non-negotiable</li>
+                        <li>Document everything — you'll thank yourself during an audit</li>
+                        <li>User communication matters — explain why MFA is required</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section aria-labelledby="video-heading">
+            <div class="container">
+                <h2 class="section-title fade-in" id="video-heading"><i class="fas fa-video" aria-hidden="true"></i> Video Walkthrough</h2>
+                <div class="video-section fade-in">
+                    <i class="fas fa-play-circle" aria-hidden="true"></i>
+                    <h4>Watch The Demo</h4>
+                    <p>Coming soon — I'll walk through the policy configuration and testing process.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section" aria-labelledby="cta-heading">
+            <div class="container">
+                <h3 id="cta-heading" class="fade-in">Want to discuss Conditional Access?</h3>
+                <a href="/cdn-cgi/l/email-protection#cdacbeb4a0a4beb9a8bf8daaa0aca4a1e3aea2a0" class="btn fade-in"><i class="fas fa-paper-plane" aria-hidden="true"></i> Get In Touch</a>
+            </div>
+        </section>
+    </main>
+    <footer role="contentinfo"><p>&copy; 2025 Andrew Symister · Lab Project</p></footer>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const fadeElements = document.querySelectorAll('.fade-in');
+        function checkFade() {
+            fadeElements.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight -

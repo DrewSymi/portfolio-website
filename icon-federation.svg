@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Central hub -->
+  <circle cx="12" cy="12" r="3" fill="currentColor" opacity="0.2"/>
+  <circle cx="12" cy="12" r="3"/>
+  
+  <!-- Connected IdPs -->
+  <circle cx="4" cy="6" r="2"/>
+  <circle cx="20" cy="6" r="2"/>
+  <circle cx="4" cy="18" r="2"/>
+  <circle cx="20" cy="18" r="2"/>
+  
+  <!-- Connection lines -->
+  <path d="M6 7L9.5 10.5"/>
+  <path d="M18 7L14.5 10.5"/>
+  <path d="M6 17L9.5 13.5"/>
+  <path d="M18 17L14.5 13.5"/>
+</svg>

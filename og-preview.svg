@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#0b1221"/>
+  
+  <!-- Subtle gradient orb -->
+  <defs>
+    <radialGradient id="orb1" cx="20%" cy="30%" r="50%">
+      <stop offset="0%" stop-color="#2563eb" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#2563eb" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <ellipse cx="200" cy="150" rx="400" ry="300" fill="url(#orb1)"/>
+  
+  <!-- Border accent -->
+  <rect x="40" y="40" width="1120" height="550" rx="12" fill="none" stroke="#243548" stroke-width="1"/>
+  
+  <!-- Left accent bar -->
+  <rect x="40" y="40" width="4" height="550" fill="#2563eb"/>
+  
+  <!-- Content -->
+  <text x="100" y="200" font-family="Inter, -apple-system, sans-serif" font-size="72" font-weight="800" fill="#e4e9f0">Andrew Symister</text>
+  
+  <text x="100" y="280" font-family="Inter, -apple-system, sans-serif" font-size="42" font-weight="600" fill="#2563eb">IAM Engineer</text>
+  
+  <text x="100" y="360" font-family="Inter, -apple-system, sans-serif" font-size="24" fill="#8a9bb0">Enterprise Identity Operations • Okta • Entra ID • SCIM</text>
+  
+  <!-- Cert badges -->
+  <rect x="100" y="420" width="100" height="36" rx="4" fill="rgba(13,150,104,0.15)" stroke="#0d9668" stroke-width="1"/>
+  <text x="150" y="445" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#0d9668" text-anchor="middle">SC-300</text>
+  
+  <rect x="220" y="420" width="140" height="36" rx="4" fill="rgba(13,150,104,0.15)" stroke="#0d9668" stroke-width="1"/>
+  <text x="290" y="445" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#0d9668" text-anchor="middle">Okta Certified</text>
+  
+  <!-- Terminal icon hint -->
+  <rect x="900" y="200" width="200" height="140" rx="8" fill="#012456" stroke="#243548" stroke-width="1"/>
+  <rect x="900" y="200" width="200" height="24" rx="8" fill="#202020"/>
+  <circle cx="915" cy="212" r="5" fill="#ff5f57"/>
+  <circle cx="932" cy="212" r="5" fill="#ffbd2e"/>
+  <circle cx="949" cy="212" r="5" fill="#28ca41"/>
+  <text x="920" y="260" font-family="Consolas, monospace" font-size="12" fill="#fefd54">PS C:\IAM&gt;</text>
+  <text x="920" y="280" font-family="Consolas, monospace" font-size="11" fill="#54ff54">✓ Connected</text>
+  <text x="920" y="300" font-family="Consolas, monospace" font-size="11" fill="#cccccc">9 systems online</text>
+  
+  <!-- URL -->
+  <text x="100" y="540" font-family="Inter, sans-serif" font-size="20" fill="#5a6a7d">andrewsymister.com</text>
+</svg>

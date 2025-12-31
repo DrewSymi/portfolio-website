@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IAM Automation & Reporting Dashboard | Andrew Symister</title>
+    <meta name="description" content="Lab project: PowerShell-driven dashboard for identity risk visibility — failed logins, account lockouts, privileged activity, MFA trends.">
+    <link rel="icon" type="image/jpeg" href="images/my-photo.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root{--bg-primary:#0a0e14;--bg-secondary:#0f1419;--bg-card:#151b23;--bg-glass:rgba(21,27,35,0.7);--text-primary:#e6edf3;--text-secondary:#8b949e;--text-muted:#6e7681;--accent:#58a6ff;--accent-green:#3fb950;--accent-yellow:#d29922;--accent-red:#f85149;--accent-cyan:#00d4ff;--border:#21262d;--glow:0 0 20px rgba(88,166,255,0.3);--transition:0.3s cubic-bezier(0.4,0,0.2,1)}
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        html{scroll-behavior:smooth}
+        body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg-primary);color:var(--text-primary);line-height:1.7}
+        .grid-bg{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.02;background-image:linear-gradient(var(--accent) 1px,transparent 1px),linear-gradient(90deg,var(--accent) 1px,transparent 1px);background-size:50px 50px}
+        :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+        nav{position:fixed;top:0;width:100%;z-index:1000;padding:1rem 5%;background:rgba(10,14,20,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+        .nav-container{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+        .back-link,.nav-contact{color:var(--text-secondary);text-decoration:none;font-size:0.9rem;display:flex;align-items:center;gap:0.5rem;transition:all var(--transition)}
+        .back-link:hover,.nav-contact:hover{color:var(--accent)}
+        .hero{padding:8rem 5% 4rem;background:var(--bg-secondary);position:relative;overflow:hidden}
+        .container{max-width:900px;margin:0 auto;position:relative;z-index:1}
+        .badge{display:inline-flex;align-items:center;gap:0.4rem;padding:0.4rem 0.75rem;border-radius:6px;font-size:0.75rem;font-weight:600;text-transform:uppercase;background:rgba(210,153,34,0.15);color:var(--accent-yellow);border:1px solid rgba(210,153,34,0.3);margin-bottom:1rem}
+        h1{font-size:2.25rem;font-weight:800;margin-bottom:1rem;line-height:1.2}
+        .subtitle{color:var(--text-secondary);font-size:1.1rem;margin-bottom:2rem}
+        .tags{display:flex;flex-wrap:wrap;gap:0.5rem}
+        .tag{padding:0.4rem 0.75rem;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;font-size:0.8rem;color:var(--text-secondary);transition:all var(--transition)}
+        .tag:hover{border-color:var(--accent)}
+        section{padding:3rem 5%;position:relative;z-index:1}
+        section:nth-child(even){background:var(--bg-secondary)}
+        .section-title{font-size:1.5rem;font-weight:700;margin-bottom:1.5rem;display:flex;align-items:center;gap:0.75rem}
+        .section-title i{color:var(--accent)}
+        .content p{color:var(--text-secondary);margin-bottom:1.25rem;line-height:1.8}
+        .content ul{color:var(--text-secondary);margin-left:1.5rem;margin-bottom:1.25rem}
+        .content li{margin-bottom:0.5rem}
+        .card{background:var(--bg-glass);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:12px;padding:1.5rem;transition:all var(--transition)}
+        .card:hover{border-color:var(--accent);box-shadow:var(--glow)}
+        .highlight-box{background:rgba(88,166,255,0.1);border:1px solid rgba(88,166,255,0.2);border-radius:8px;padding:1.25rem;margin:1.5rem 0}
+        .highlight-box h4{color:var(--accent);font-size:0.9rem;margin-bottom:0.5rem}
+        .highlight-box p{color:var(--text-secondary);margin:0}
+        .dashboard-preview{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;margin:2rem 0}
+        .dashboard-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+        .dashboard-title{font-size:1rem;font-weight:600;display:flex;align-items:center;gap:0.5rem}
+        .dashboard-title i{color:var(--accent)}
+        .metrics-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
+        .mini-metric{background:var(--bg-secondary);border-radius:8px;padding:1rem;text-align:center;transition:all var(--transition)}
+        .mini-metric:hover{background:rgba(88,166,255,0.1)}
+        .mini-metric-value{font-size:1.5rem;font-weight:700}
+        .mini-metric-value.good{color:var(--accent-green)}
+        .mini-metric-value.warn{color:var(--accent-yellow)}
+        .mini-metric-value.bad{color:var(--accent-red)}
+        .mini-metric-label{font-size:0.7rem;color:var(--text-muted);margin-top:0.25rem}
+        .alert-box{background:rgba(248,81,73,0.1);border:1px solid rgba(248,81,73,0.3);border-radius:8px;padding:1rem;display:flex;align-items:flex-start;gap:1rem;margin-top:1rem}
+        .alert-icon{width:40px;height:40px;background:rgba(248,81,73,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--accent-red);flex-shrink:0}
+        .alert-content{flex:1}
+        .alert-content h5{color:var(--accent-red);font-size:0.85rem;margin-bottom:0.25rem}
+        .alert-content p{color:var(--text-muted);font-size:0.8rem;margin:0}
+        .alert-action{background:rgba(210,153,34,0.1);border:1px solid rgba(210,153,34,0.3);color:var(--accent-yellow);padding:0.4rem 0.75rem;border-radius:6px;font-size:0.75rem;font-weight:600;text-transform:uppercase}
+        .code-block{background:#0d1117;border:1px solid var(--border);border-radius:8px;padding:1.25rem;margin:1rem 0;overflow-x:auto;position:relative}
+        .code-block::before{content:attr(data-lang);position:absolute;top:0.5rem;right:0.75rem;font-size:0.7rem;color:var(--text-muted);text-transform:uppercase;font-family:'JetBrains Mono',monospace}
+        .code-block pre{font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:#c9d1d9;margin:0;white-space:pre-wrap;line-height:1.6}
+        .code-block .comment{color:#8b949e}
+        .tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:1.5rem 0}
+        .tool-card{padding:1rem;text-align:center}
+        .tool-card i{font-size:2rem;color:var(--accent);margin-bottom:0.75rem}
+        .tool-card h4{font-size:0.9rem;margin-bottom:0.25rem}
+        .tool-card p{font-size:0.75rem;color:var(--text-muted);margin:0}
+        .video-section{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:2.5rem;text-align:center;margin:2rem 0}
+        .video-section i{font-size:3rem;color:var(--accent);margin-bottom:1rem;display:block}
+        .video-section h4{margin-bottom:0.5rem}
+        .video-section p{color:var(--text-muted);font-size:0.9rem}
+        .cta-section{text-align:center;padding:4rem 5%}
+        .btn{padding:0.875rem 1.5rem;border-radius:8px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;background:linear-gradient(135deg,var(--accent),#4a90d9);color:var(--bg-primary);transition:all var(--transition)}
+        .btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(88,166,255,0.3)}
+        footer{padding:2rem 5%;text-align:center;border-top:1px solid var(--border);color:var(--text-muted);font-size:0.85rem;position:relative;z-index:1}
+        .fade-in{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease}
+        .fade-in.visible{opacity:1;transform:translateY(0)}
+        @media(max-width:768px){h1{font-size:1.75rem}section{padding:2rem 5%}.metrics-row{grid-template-columns:repeat(2,1fr)}.tools-grid{grid-template-columns:1fr}}
+        @media(prefers-reduced-motion:reduce){.fade-in{opacity:1;transform:none}}
+    </style>
+</head>
+<body>
+    <div class="grid-bg" aria-hidden="true"></div>
+    <nav aria-label="Project navigation">
+        <div class="nav-container">
+            <a href="index.html" class="back-link"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back to Portfolio</a>
+            <a href="/cdn-cgi/l/email-protection#f594868c989c86819087b59298949c99db969a98" class="nav-contact"><i class="fas fa-paper-plane" aria-hidden="true"></i> Contact</a>
+        </div>
+    </nav>
+    <main>
+        <header class="hero">
+            <div class="container">
+                <span class="badge"><i class="fas fa-flask" aria-hidden="true"></i> Lab Project</span>
+                <h1>IAM Automation & Reporting Dashboard</h1>
+                <p class="subtitle">PowerShell-driven dashboard for identity risk visibility — failed logins, account lockouts, privileged activity, and MFA trends.</p>
+                <div class="tags" role="list" aria-label="Technologies used">
+                    <span class="tag" role="listitem">PowerShell</span>
+                    <span class="tag" role="listitem">Microsoft Graph</span>
+                    <span class="tag" role="listitem">Reporting</span>
+                    <span class="tag" role="listitem">Monitoring</span>
+                    <span class="tag" role="listitem">Governance</span>
+                </div>
+            </div>
+        </header>
+
+        <section aria-labelledby="problem-heading">
+            <div class="container">
+                <h2 class="section-title fade-in" id="problem-heading"><i class="fas fa-question-circle" aria-hidden="true"></i> Problem Statement</h2>
+                <div class="content fade-in">
+                    <p>Identity data lives in silos. Sign-in logs in one portal. MFA status in another. Privileged group membership buried in Active Directory. When something goes wrong, teams waste hours stitching together information from multiple sources.</p>
+                    <p>This project demonstrates how to automate data collection and create a unified view of identity risk indicators — giving security teams actionable visibility instead of data sprawl.</p>
+                </div>
+            </div>
+        </section>
+
+        <section aria-labelledby="why-heading">
+            <div class="container">
+                <h2 class="section-title fade-in" id="why-heading"><i class="fas fa-lightbulb" aria-hidden="true"></i> Why This Matters in IAM</h2>
+                <div class="content fade-in">
+                    <p>You can't protect what you can't see. Identity risk visibility enables:</p>
+                    <ul>
+                        <li><strong>Early Detection:</strong> Spot brute force attempts before they succeed</li>
+                        <li><strong>Compliance Evidence:</strong> Demonstrate MFA coverage to auditors</li>
+                        <li><strong>Hygiene Tracking:</strong> Identify stale accounts before they become attack vectors</li>
+                        <li><strong>Privileged Oversight:</strong> Know who has elevated access at any moment</li>
+                        <li><strong>Trend Analysis:</strong> Understand if security posture is improving or degrading</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section aria-labelledby="dashboard-heading">
+            <div class="container">
+                <h2 class="section-title fade-in" id="dashboard-heading"><i class="fas fa-desktop" aria-hidden="true"></i> Dashboard Preview</h2>
+                <div class="dashboard-preview fade-in" role="img" aria-label="Interactive dashboard preview">
+                    <div class="dashboard-header">
+                        <div class="dashboard-title"><i class="fas fa-shield-halved" aria-hidden="true"></i> IAM Security Dashboard</div>
+                    </div>
+                    <div class="metrics-row" role="list" aria-label="Dashboard metrics">
+                        <div class="mini-metric" role="listitem"><div class="mini-metric-value bad">847</div><div class="mini-metric-label">Failed Logins (24h)</div></div>
+                        <div class="mini-metric" role="listitem"><div class="mini-metric-value warn">23</div><div class="mini-metric-label">Account Lockouts</div></div>
+                        <div class="mini-metric" role="listitem"><div class="mini-metric-value good">94%</div><div class="mini-metric-label">MFA Enrolled</div></div>
+                        <div class="mini-metric" role="listitem"><div class="mini-metric-value warn">127</div><div class="mini-metric-label">Stale Accounts</div></div>
+                    </div>
+                    <div class="alert-box" role="alert">
+                        <div class="alert-icon"><i class="fas fa-exclamation" aria-hidden="true"></i></div>
+                        <div class="alert-content">
+                            <h5>Alert: Privileged Account Activity</h5>
+                            <p>admin_svc logged into 4 servers between 2:00-3:00 AM — unusual for this account</p>
+                        </div>
+                        <span class="alert-action">Investigate</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section aria-labelledby="metrics-heading">
+            <div class="container">
+                <h2 class="section-title fade-in" id="metrics-heading"><i class="fas fa-chart-line" aria-hidden="true"></i> Key Metrics Tracked</h2>
+                <div class="content fade-in">
+                    <ul>
+                        <li><strong>Failed Authentication Trends:</strong> Spikes may indicate credential stuffing attacks</li>
+                        <li><strong>Account Lockouts:</strong> High numbers suggest password spraying or user issues</li>
+                        <li><strong>MFA Enrollment Rate:</strong> Compliance tracking with gap identification</li>
+                        <li><strong>Stale Account Count:</strong> Inactive accounts are attack surface</li>
+                        <li><strong>Privileged Account Activity:</strong> Unusual access patterns for admin accounts</li>
+                        <li><strong>New Admin Assignments:</strong> Who gained elevated access this week?</li>
+                    </ul>
+                </div>
+                <div class="highlight-box fade-in">
+                    <h4><i class="fas fa-info-circle" aria-hidden="true"></i> Mock Data</h4>
+                    <p>All metrics and alerts use simulated data for demonstration. No real user information involved.</p>
+                </div>
+            </div>
+        </section>
+
+        <section aria-labelledby="tools-heading">
+            <div class="container">
+                <h2 class="section-title fade-in" id="tools-heading"><i class="fas fa-tools" aria-hidden="true"></i> Tools Used</h2>
+                <div class="tools-grid fade-in" role="list" aria-label="Tools">
+                    <article class="card tool-card" role="listitem">
+                        <i class="fas fa-terminal" aria-hidden="true"></i>
+                        <h4>PowerShell</h4>
+                        <p>Data collection, automation, scheduled tasks</p>
+                    </article>
+                    <article class="card tool-card" role="listitem">
+                        <i class="fas fa-cloud" aria-hidden="true"></i>
+                        <h4>Microsoft Graph API</h4>
+                        <p>Sign-in logs, user data, authentication methods</p>
+                    </article>
+                    <article class="card tool-card" role="listitem">
+                        <i class="fas fa-server" aria-hidden="true"></i>
+                        <h4>Active Directory</h4>
+                        <p>Group membership, account status, last logon</p>
+                    </article>
+                    <article class="card tool-card" role="listitem">
+                        <i class="fas fa-file-csv" aria-hidden="true"></i>
+                        <h4>CSV / HTML Export</h4>
+                        <p>Scheduled reports for stakeholders</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section aria-labelledby="code-heading">
+            <div class="container">
+                <h2 class="section-title fade-in" id="code-heading"><i class="fas fa-code" aria-hidden="true"></i> Sample Automation</h2>
+                <div class="code-block fade-in" data-lang="PowerShell">
+                    <pre><span class="comment"># Get failed sign-ins from last 24 hours</span>
+$StartDate = (Get-Date).AddDays(-1).ToString("yyyy-MM-ddTHH:mm:ssZ")
+
+$FailedSignIns = Get-MgAuditLogSignIn -Filter `
+    "status/errorCode ne 0 and createdDateTime ge $StartDate" `
+    -Top 1000
+
+<span class="comment"># Group by failure reason</span>
+$FailureAnalysis = $FailedSignIns | Group-Object {
+    $_.Status.FailureReason
+} | Select-Object Name, Count | Sort-Object Count -Descending
+
+<span class="comment"># Identify potential brute force targets</span>
+$TargetedAccounts = $FailedSignIns | Group-Object UserPrincipalName |
+    Where-Object { $_.Count -gt 10 } |
+    Select-Object Name, Count
+
+Write-Host "Accounts with 10+ failed attempts:"
+$TargetedAccounts | Format-Table -AutoSize</pre>
+                </div>
+            </div>
+        </section>
+
+        <section aria-labelledby="risk-heading">
+            <div class="container">
+                <h2 class="section-title fade-in" id="risk-heading"><i class="fas fa-shield-virus" aria-hidden="true"></i> Risk Considerations</h2>
+                <div class="content fade-in">
+                    <ul>
+                        <li><strong>Alert Fatigue:</strong> Too many alerts means important ones get ignored</li>
+                        <li><strong>False Positives:</strong> Legitimate travel, VPN changes can trigger alerts</li>
+                        <li><strong>Data Retention:</strong> Log storage has compliance and cost implications</li>
+                        <li><strong>Access to Data:</strong> Dashboard access itself needs governance</li>
+                        <li><strong>Baseline Drift:</strong> "Normal" changes over time — thresholds need tuning</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section aria-labelledby="learnings-heading">
+            <div class="container">
+                <h2 class="section-title fade-in" id="learnings-heading"><i class="fas fa-graduation-cap" aria-hidden="true"></i> Lessons Learned</h2>
+                <div class="content fade-in">
+                    <ul>
+                        <li>Executive dashboards need simplicity; security teams need drill-down detail</li>
+                        <li>Trend data is often more valuable than point-in-time snapshots</li>
+                        <li>Alert fatigue is real — focus on actionable, high-confidence signals</li>
+                        <li>Defining "anomalous" requires understanding normal business patterns first</li>
+                        <li>Automation reduces manual work but requires ongoing maintenance</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section aria-labelledby="video-heading">
+            <div class="container">
+                <h2 class="section-title fade-in" id="video-heading"><i class="fas fa-video" aria-hidden="true"></i> Video Walkthrough</h2>
+                <div class="video-section fade-in">
+                    <i class="fas fa-play-circle" aria-hidden="true"></i>
+                    <h4>Watch The Demo</h4>
+                    <p>Coming soon — I'll walk through the dashboard design and PowerShell scripts.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="container">
+                <h3 class="fade-in">Want to discuss IAM monitoring or automation?</h3>
+                <a href="/cdn-cgi/l/email-protection#6a0b19130703191e0f182a0d070b030644090507" class="btn fade-in"><i class="fas fa-paper-plane" aria-hidden="true"></i> Get In Touch</a>
+            </div>
+        </section>
+    </main>
+    <footer role="contentinfo"><p>&copy; 2025 Andrew Symister · Lab Project — Mock data only</p></footer>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const fadeElements = document.querySelectorAll('.fade-in');
+        function checkFade() {
+            fadeElements.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight -
